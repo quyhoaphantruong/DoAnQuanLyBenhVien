@@ -4,8 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
-public class UserEntity {
+public class TaiKhoan {
     @Id
-    private String phone;
-    private String username;
+    private String soDienThoai;
+    private String matKhau;
 }

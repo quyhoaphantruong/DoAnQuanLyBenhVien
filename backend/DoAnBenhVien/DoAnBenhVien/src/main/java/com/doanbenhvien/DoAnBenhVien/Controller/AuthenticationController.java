@@ -12,4 +12,5 @@ public class AuthenticationController {
     public ResponseEntity<String> hello() {
         return ResponseEntity.ok("hello");
     }
+
 }
