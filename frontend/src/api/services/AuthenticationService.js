@@ -1,23 +1,11 @@
-import AxiosInstance from "../../config/AxiosInstance";
+import AxiosInstance from "../../configs/AxiosInstance";
 
 class AuthenticationService {
-  login = async (username, password) => {
+  loginForPersonnel = async (personnel) => {
     try {
-      const response = await AxiosInstance.post("/authentication/login", {
-        username,
-        password,
-      });
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  signup = async (username, password) => {
-    try {
-      const response = await AxiosInstance.post("/authentication/register", {
-        username,
-        password,
+      const response = await AxiosInstance.post("/auth/login-personnel", {
+        soDienThoai: personnel.soDienThoai,
+        matKhau: personnel.matKhau,
       });
       return response;
     } catch (error) {

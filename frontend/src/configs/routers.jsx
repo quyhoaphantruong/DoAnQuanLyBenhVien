@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-import LoginPage from "../pages/LoginPage";
 import SignupPage from "../pages/SignupPage";
 import MainLayout from "../components/layout/MainLayout";
 import HomePage from "../pages/HomePage";
 import PatientsPage from "../pages/PatientsPage";
 import AppointmentsPage from "../pages/AppointmentsPage";
 import StaffPage from "../pages/StaffPage";
+import LoginPageForPersonnel from "../pages/LoginPageForPersonnel";
 
 const router = createBrowserRouter([
   {
@@ -35,8 +35,8 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/login",
-    element: <LoginPage />,
+    path: "/login-personnel",
+    element: <LoginPageForPersonnel />,
   },
   {
     path: "/signup",

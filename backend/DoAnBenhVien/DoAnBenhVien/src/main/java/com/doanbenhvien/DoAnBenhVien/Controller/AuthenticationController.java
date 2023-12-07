@@ -1,6 +1,7 @@
 package com.doanbenhvien.DoAnBenhVien.Controller;
 
 import com.doanbenhvien.DoAnBenhVien.DTO.DangKyRequest;
+import com.doanbenhvien.DoAnBenhVien.DTO.Request.SigninRequest;
 import com.doanbenhvien.DoAnBenhVien.Service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +21,15 @@ public class AuthenticationController {
         return ResponseEntity.ok("hello");
     }
     @PostMapping("/signup")
-    public ResponseEntity<String> dangKyBenhNhan(@RequestBody DangKyRequest dangKyRequest) {
+    public ResponseEntity<?> dangKyBenhNhan(@RequestBody DangKyRequest dangKyRequest) {
         return authenticationService.dangKyBenhNhan(
                 dangKyRequest.getSoDienThoai(),
                 dangKyRequest.getMatKhau()
         );
     }
 
+    @PostMapping("/login-personnel")
+    public ResponseEntity<?> dangNhapChoNhanVien (@RequestBody SigninRequest signinRequest) {
+        return authenticationService.dangNhapNhanVien(signinRequest);
+    }
 }
