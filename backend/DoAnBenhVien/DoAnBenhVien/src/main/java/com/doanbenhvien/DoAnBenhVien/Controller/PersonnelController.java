@@ -15,6 +15,7 @@ public class PersonnelController {
     PersonnelService personnelService;
     @PostMapping
     public ResponseEntity<?> taoNhanSu(@RequestBody CreatePersonnelRequest createPersonnelRequest) {
+        System.out.println(createPersonnelRequest);
         return personnelService.taoNhanVien(createPersonnelRequest);
     }
 }

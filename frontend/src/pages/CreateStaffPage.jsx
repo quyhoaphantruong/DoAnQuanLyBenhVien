@@ -12,6 +12,11 @@ import PersonnelService from "../api/services/PersonnelService";
 
 const fields = [
   {
+    label: "Id Nhân viên",
+    type: "text",
+    key: "idNhanVien",
+  },
+  {
     label: "Tên nhân viên",
     type: "text",
     key: "ten",
@@ -45,6 +50,7 @@ const fields = [
 
 function CreateStaffPage() {
   const [nhanVien, setNhanVien] = useState({
+    idNhanVien: "",
     ten: "",
     ngaySinh: "",
     diaChi: "",
