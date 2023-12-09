@@ -29,7 +29,7 @@ const SidebarItemCollapse = ({ item }) => {
       <ListItemButton
         onClick={() => setOpen(!open)}
         sx={{
-          "&: hover": {
+          "&:hover": {
             backgroundColor: colorConfigs.sidebar.hoverBg,
           },
           paddingY: "12px",

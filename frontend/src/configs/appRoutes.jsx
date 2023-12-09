@@ -36,6 +36,15 @@ const appRoutes = [
       displayText: "Staff",
       icon: <ManIcon />,
     },
+    child: [
+      {
+        path: "/create-staff",
+        sidebarProps: {
+          displayText: "Create staff",
+          icon: <ManIcon />,
+        },
+      },
+    ],
   },
   {
     state: "working-calendars",

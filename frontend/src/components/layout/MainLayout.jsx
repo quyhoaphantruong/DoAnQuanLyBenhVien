@@ -4,8 +4,11 @@ import sizeConfigs from "../../configs/sizeConfig";
 import Topbar from "../Topbar";
 import Sidebar from "../sidebar/Sidebar";
 import colorConfigs from "../../configs/colorConfigs";
+import { useSelector } from "react-redux";
 
 const MainLayout = () => {
+  const { user } = useSelector((state) => state.user);
+  console.log(user);
   return (
     <Box sx={{ display: "flex" }}>
       <Topbar />

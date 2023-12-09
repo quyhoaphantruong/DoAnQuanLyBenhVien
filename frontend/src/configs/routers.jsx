@@ -6,6 +6,7 @@ import PatientsPage from "../pages/PatientsPage";
 import AppointmentsPage from "../pages/AppointmentsPage";
 import StaffPage from "../pages/StaffPage";
 import LoginPageForPersonnel from "../pages/LoginPageForPersonnel";
+import CreateStaffPage from "../pages/CreateStaffPage";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/staff",
         element: <StaffPage />,
+      },
+      {
+        path: "/create-staff",
+        element: <CreateStaffPage />,
       },
       {
         path: "/working-calendars",
