@@ -70,11 +70,11 @@ const[TroKhamList,setTroKham]=useState([
     </DateTimePickerComponent>
     </div>
     <div className="SelectGroup">
-    <Select value ={selects_BacSi} onChange={(e)=>setSelects_BacSi(e.target.value)} placeholder="Chọn Bác Sĩ">
+    <select value ={selects_BacSi} onChange={(e)=>setSelects_BacSi(e.target.value)} placeholder="Chọn Bác Sĩ">
           {BacSiList.map((BacSi, index) => (
             <MenuItem value={BacSi}>{BacSi}</MenuItem>
           ))}
-    </Select>
+    </select>
     </div>
 
     <div className="SelectGroup">
@@ -84,7 +84,6 @@ const[TroKhamList,setTroKham]=useState([
           ))}
     </Select>
     </div>
-
     <div className="SelectGroup">
     <Select value ={selects_State} onChange={(e)=>setSelects_State(e.target.value)}>
           
@@ -106,7 +105,6 @@ const[TroKhamList,setTroKham]=useState([
 
     <div className="SelectGroup">
     <Select value ={selects_Phong} onChange={(e)=>setSelects_Phong(e.target.value)} >
-          
           {PhongList.map((Phong, index) => (
             <MenuItem value={Phong}>{Phong}</MenuItem>
           ))}
@@ -116,9 +114,6 @@ const[TroKhamList,setTroKham]=useState([
     <Button variant="contained">
         Thêm cuộc hẹn
       </Button>
-
-
-
 
   </Box>
   </div>)
