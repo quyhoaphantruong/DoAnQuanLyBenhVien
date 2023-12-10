@@ -1,7 +1,6 @@
 package com.doanbenhvien.DoAnBenhVien.Utils;
 
 import org.springframework.stereotype.Component;
-
 @Component
 public class ErrorHandler {
     public String getMessageError(String error) {

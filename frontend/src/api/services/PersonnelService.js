@@ -10,6 +10,15 @@ class PersonnelService {
       return error;
     }
   };
+
+  xemDanhSachNhanVien = async () => {
+    try {
+      const response = await AxiosInstance.get("/personnel");
+      return response;
+    } catch (error) {
+      return error;
+    }
+  };
 }
 
 export default new PersonnelService();

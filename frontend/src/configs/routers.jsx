@@ -4,9 +4,12 @@ import MainLayout from "../components/layout/MainLayout";
 import HomePage from "../pages/HomePage";
 import PatientsPage from "../pages/PatientsPage";
 import AppointmentsPage from "../pages/AppointmentsPage";
-import StaffPage from "../pages/StaffPage";
 import LoginPageForPersonnel from "../pages/LoginPageForPersonnel";
 import CreateStaffPage from "../pages/CreateStaffPage";
+import CreateAppointment from "../pages/appointments/CreateAppointment";
+import CreateCalendar from "../pages/working-calendar/CreateCalendar";
+import StaffViewPage from "../pages/staff/StaffViewPage";
+import CalendarStaffPage from "../pages/working-calendar/CalendarStaffPage";
 
 const router = createBrowserRouter([
   {
@@ -26,8 +29,12 @@ const router = createBrowserRouter([
         element: <AppointmentsPage />,
       },
       {
+        path: "/create-appointment",
+        element: <CreateAppointment />,
+      },
+      {
         path: "/staff",
-        element: <StaffPage />,
+        element: <StaffViewPage />,
       },
       {
         path: "/create-staff",
@@ -36,6 +43,14 @@ const router = createBrowserRouter([
       {
         path: "/working-calendars",
         element: <div>Working Calendars</div>,
+      },
+      {
+        path: "/create-calendar",
+        element: <CreateCalendar />,
+      },
+      {
+        path: "/calendar-staff",
+        element: <CalendarStaffPage />,
       },
     ],
   },

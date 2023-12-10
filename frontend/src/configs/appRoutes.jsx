@@ -9,7 +9,7 @@ const appRoutes = [
     state: "home",
     path: "/home",
     sidebarProps: {
-      displayText: "Home",
+      displayText: "Trang chủ",
       icon: <HomeIcon />,
     },
   },
@@ -17,7 +17,7 @@ const appRoutes = [
     state: "manage-patient",
     path: "/patients",
     sidebarProps: {
-      displayText: "Patients",
+      displayText: "Bệnh nhân",
       icon: <AccessibleIcon />,
     },
   },
@@ -25,22 +25,40 @@ const appRoutes = [
     state: "appointment",
     path: "/appointments",
     sidebarProps: {
-      displayText: "Appointments",
+      displayText: "Cuộc hẹn",
       icon: <LocalPhoneIcon />,
     },
+    child: [
+      {
+        state: "create-appointments",
+        path: "/create-appointment",
+        sidebarProps: {
+          displayText: "Tạo cuộc hẹn",
+          icon: <LocalPhoneIcon />,
+        },
+      },
+    ],
   },
   {
     state: "staff",
     path: "/staff",
     sidebarProps: {
-      displayText: "Staff",
+      displayText: "Nhân viên",
       icon: <ManIcon />,
     },
     child: [
       {
         path: "/create-staff",
         sidebarProps: {
-          displayText: "Create staff",
+          displayText: "Tạo nhân viên",
+          icon: <ManIcon />,
+        },
+      },
+      {
+        path: "/staff",
+        index: true,
+        sidebarProps: {
+          displayText: "Danh sách nhân viên",
           icon: <ManIcon />,
         },
       },
@@ -50,9 +68,27 @@ const appRoutes = [
     state: "working-calendars",
     path: "/working-calendars",
     sidebarProps: {
-      displayText: "Working calendars",
+      displayText: "Lịch làm việc",
       icon: <CalendarMonthIcon />,
     },
+    child: [
+      {
+        state: "create-calendar",
+        path: "/create-calendar",
+        sidebarProps: {
+          displayText: "Tạo lịch hẹn",
+          icon: <CalendarMonthIcon />,
+        },
+      },
+      {
+        state: "calendar-staff",
+        path: "/calendar-staff",
+        sidebarProps: {
+          displayText: "Lịch làm việc nhân viên",
+          icon: <CalendarMonthIcon />,
+        },
+      },
+    ],
   },
 ];
 

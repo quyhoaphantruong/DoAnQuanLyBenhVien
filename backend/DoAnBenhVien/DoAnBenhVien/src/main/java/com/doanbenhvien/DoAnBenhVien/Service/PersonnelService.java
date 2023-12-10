@@ -1,5 +1,6 @@
 package com.doanbenhvien.DoAnBenhVien.Service;
 
+import com.doanbenhvien.DoAnBenhVien.DTO.NhanVienDTO;
 import com.doanbenhvien.DoAnBenhVien.DTO.Request.CreatePersonnelRequest;
 import com.doanbenhvien.DoAnBenhVien.Utils.ErrorHandler;
 import jakarta.persistence.EntityManager;
@@ -10,14 +11,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
 public class PersonnelService {
     @Autowired
-    EntityManager entityManager;
+    private EntityManager entityManager;
     @Autowired
-    ErrorHandler errorHandler;
+    private ErrorHandler errorHandler;
+
     public ResponseEntity<?> taoNhanVien(CreatePersonnelRequest createPersonnelRequest) {
         StoredProcedureQuery storedProcedureQuery = entityManager
                 .createStoredProcedureQuery("TAO_NHAN_VIEN");
@@ -49,5 +53,27 @@ public class PersonnelService {
                     errorHandler.getMessageError(e.getMessage())
             );
         }
+    }
+
+    public ResponseEntity<List<NhanVienDTO>> layDanhSachNhanVien() {
+        StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("XEM_DSNHANVIEN");
+
+        storedProcedure.execute();
+
+        List<Object[]> resultList = storedProcedure.getResultList();
+        List<NhanVienDTO> nhanVienDTOList = new ArrayList<>();
+
+        for (Object[] row : resultList) {
+            String idNhanVien = (String) row[0];
+            String ten = (String) row[1];
+            Date ngaySinh = (Date) row[2];
+            String diaChi = (String) row[3];
+            String soDienThoai = (String) row[4];
+            String email = (String) row[5];
+            String loaiNhanVien = (String) row[6];
+            NhanVienDTO nhanVienDTO = new NhanVienDTO(idNhanVien, ten, ngaySinh, diaChi, soDienThoai, email, loaiNhanVien);
+            nhanVienDTOList.add(nhanVienDTO);
+        }
+        return ResponseEntity.ok(nhanVienDTOList);
     }
 }
