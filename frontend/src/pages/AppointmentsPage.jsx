@@ -61,6 +61,7 @@ function AppointmentsPage() {
       <Typography variant="h3">Thêm lịch hẹn</Typography>
       <Box as="form">
 
+<<<<<<< HEAD
         <TextField label="Nhập ghi chú" className="GhiChu" value={GhiChu}
           onChange={(e) => setGhiChu(e.target.value)} />
 
@@ -84,10 +85,42 @@ function AppointmentsPage() {
             ))}
           </Select>
         </div>
+=======
+    <div className="NgayGio">
+    <DateTimePickerComponent value={DateTime}
+     onChange={(e)=>setDateTime(e.target.value)}>
+    </DateTimePickerComponent>
+    </div>
+    <div className="SelectGroup">
+    <select value ={selects_BacSi} onChange={(e)=>setSelects_BacSi(e.target.value)} placeholder="Chọn Bác Sĩ">
+          {BacSiList.map((BacSi, index) => (
+            <MenuItem value={BacSi}>{BacSi}</MenuItem>
+          ))}
+    </select>
+    </div>
+
+    <div className="SelectGroup">
+    <Select value ={selects_TroKham} onChange={(e)=>setSelects_TroKham(e.target.value)}>
+          {TroKhamList.map((TroKham, index) => (
+            <MenuItem value={TroKham}>{TroKham}</MenuItem>
+          ))}
+    </Select>
+    </div>
+    <div className="SelectGroup">
+    <Select value ={selects_State} onChange={(e)=>setSelects_State(e.target.value)}>
+          
+          {StateList.map((Loai, index) => (
+            <MenuItem value={Loai}>{Loai}</MenuItem>
+          ))}
+    </Select>
+    
+    </div>
+>>>>>>> 7f1a18936ae66cc8a13efaa5af0f194e049bb1f9
 
         <div className="SelectGroup">
           <Select value={selects_State} onChange={(e) => setSelects_State(e.target.value)}>
 
+<<<<<<< HEAD
             {StateList.map((Loai, index) => (
               <MenuItem value={Loai}>{Loai}</MenuItem>
             ))}
@@ -122,6 +155,22 @@ function AppointmentsPage() {
 
       </Box>
     </div>)
+=======
+    <div className="SelectGroup">
+    <Select value ={selects_Phong} onChange={(e)=>setSelects_Phong(e.target.value)} >
+          {PhongList.map((Phong, index) => (
+            <MenuItem value={Phong}>{Phong}</MenuItem>
+          ))}
+    </Select>
+    </div>
+    
+    <Button variant="contained">
+        Thêm cuộc hẹn
+      </Button>
+
+  </Box>
+  </div>)
+>>>>>>> 7f1a18936ae66cc8a13efaa5af0f194e049bb1f9
 
 }
 
