@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.20",
     "@reduxjs/toolkit": "^1.9.7",
+    "@syncfusion/ej2-material-theme": "^23.2.7",
     "@syncfusion/ej2-react-calendars": "^23.2.7",
     "axios": "^1.6.2",
     "moment": "^2.29.4",

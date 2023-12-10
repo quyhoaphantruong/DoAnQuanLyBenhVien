@@ -2,6 +2,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import AccessibleIcon from "@mui/icons-material/Accessible";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import VaccinesIcon from '@mui/icons-material/Vaccines';
 import ManIcon from "@mui/icons-material/Man";
 
 const appRoutes = [
@@ -45,6 +46,14 @@ const appRoutes = [
         },
       },
     ],
+  },
+  {
+    state: "create-med",
+    path: "/create-med",
+    sidebarProps: {
+      displayText: "Create Medicine",
+      icon: <VaccinesIcon />,
+    },
   },
   {
     state: "working-calendars",

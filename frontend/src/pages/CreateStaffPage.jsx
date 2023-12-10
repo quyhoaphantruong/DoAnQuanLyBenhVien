@@ -50,7 +50,7 @@ function CreateStaffPage() {
     diaChi: "",
     email: "",
     soDienThoai: "",
-    loaiNhanVien: "Quản trị viên",
+    loaiNhanVien: "Nha sĩ",
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -90,6 +90,7 @@ function CreateStaffPage() {
               <MenuItem value={"Quản trị viên"}>Quản trị viên</MenuItem>
               <MenuItem value={"Nhân viên"}>Nhân viên</MenuItem>
               <MenuItem value={"Nha sĩ"}>Nha sĩ</MenuItem>
+              <MenuItem value={"Trợ khám"}>Trợ khám</MenuItem>
             </Select>
           ) : (
             <FormGroup
