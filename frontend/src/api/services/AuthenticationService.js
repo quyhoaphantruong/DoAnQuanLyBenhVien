@@ -12,6 +12,15 @@ class AuthenticationService {
       console.log(error);
     }
   };
+
+  dangKyBenhNhan = async (benhNhan) => {
+    try {
+      const response = await AxiosInstance.post("/auth/signup", benhNhan);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  };
 }
 
 export default new AuthenticationService();

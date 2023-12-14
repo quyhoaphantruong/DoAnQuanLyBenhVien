@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from "./features/userSlice";
 import appStateReducer from "./features/appStateSlice";
+import staffReducer from "./features/staffSlice";
 
 import { persistReducer } from "redux-persist";
 import sessionStorage from "redux-persist/lib/storage/session";
@@ -12,9 +13,16 @@ const userPersistConfig = {
   whitelist: ["username"],
 };
 
+const staffPersitConfig = {
+  key: "staff",
+  storage: sessionStorage,
+  whitelist: ["dsNhanvien"],
+};
+
 const rootReducer = combineReducers({
   user: persistReducer(userPersistConfig, userReducer),
   appState: appStateReducer,
+  staff: persistReducer(staffPersitConfig, staffReducer),
 });
 
 export const store = configureStore({

@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,13 +27,11 @@ public class WorkingCalendarService {
     public ResponseEntity<?> taoLichLamViec(LichLamViecDTO lichLamViecDTO) {
         StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("TAO_LICH_LAM_VIEC");
 
-        storedProcedureQuery.registerStoredProcedureParameter("ID_LICHLAMVIEC", String.class, ParameterMode.IN);
-        storedProcedureQuery.registerStoredProcedureParameter("ID_NHANVIEN", String.class, ParameterMode.IN);
-        storedProcedureQuery.registerStoredProcedureParameter("ID_PHONGKHAM", String.class, ParameterMode.IN);
+        storedProcedureQuery.registerStoredProcedureParameter("ID_NHANVIEN", Integer.class, ParameterMode.IN);
+        storedProcedureQuery.registerStoredProcedureParameter("ID_PHONGKHAM", Integer.class, ParameterMode.IN);
         storedProcedureQuery.registerStoredProcedureParameter("GIO_BATDAU", LocalDateTime.class, ParameterMode.IN);
         storedProcedureQuery.registerStoredProcedureParameter("GIO_KETTHUC", LocalDateTime.class, ParameterMode.IN);
 
-        storedProcedureQuery.setParameter("ID_LICHLAMVIEC", lichLamViecDTO.getIdLichLamViec());
         storedProcedureQuery.setParameter("ID_NHANVIEN", lichLamViecDTO.getIdNhanVien());
         storedProcedureQuery.setParameter("ID_PHONGKHAM", lichLamViecDTO.getPhongKham());
         storedProcedureQuery.setParameter("GIO_BATDAU", lichLamViecDTO.getGioBatDau());

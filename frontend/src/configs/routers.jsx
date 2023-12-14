@@ -10,6 +10,8 @@ import CreateAppointment from "../pages/appointments/CreateAppointment";
 import CreateCalendar from "../pages/working-calendar/CreateCalendar";
 import StaffViewPage from "../pages/staff/StaffViewPage";
 import CalendarStaffPage from "../pages/working-calendar/CalendarStaffPage";
+import CalendarEachStaff from "../pages/working-calendar/CalendarEachStaff";
+import ManageStaffPage from "../pages/staff/ManageStaffPage";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +43,10 @@ const router = createBrowserRouter([
         element: <CreateStaffPage />,
       },
       {
+        path: "/manage-staff",
+        element: <ManageStaffPage />,
+      },
+      {
         path: "/working-calendars",
         element: <div>Working Calendars</div>,
       },
@@ -51,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "/calendar-staff",
         element: <CalendarStaffPage />,
+      },
+      {
+        path: "/calendar-staff/:idNhanVien",
+        element: <CalendarEachStaff />,
       },
     ],
   },

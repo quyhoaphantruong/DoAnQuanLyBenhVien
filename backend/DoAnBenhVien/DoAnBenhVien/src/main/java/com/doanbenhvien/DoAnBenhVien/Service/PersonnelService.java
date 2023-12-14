@@ -56,7 +56,7 @@ public class PersonnelService {
     }
 
     public ResponseEntity<List<NhanVienDTO>> layDanhSachNhanVien() {
-        StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("XEM_DSNHANVIEN");
+        StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("XEM_DS_NHANVIEN");
 
         storedProcedure.execute();
 
@@ -64,7 +64,7 @@ public class PersonnelService {
         List<NhanVienDTO> nhanVienDTOList = new ArrayList<>();
 
         for (Object[] row : resultList) {
-            String idNhanVien = (String) row[0];
+            Integer idNhanVien = (Integer) row[0];
             String ten = (String) row[1];
             Date ngaySinh = (Date) row[2];
             String diaChi = (String) row[3];

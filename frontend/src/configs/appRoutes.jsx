@@ -20,6 +20,16 @@ const appRoutes = [
       displayText: "Bệnh nhân",
       icon: <AccessibleIcon />,
     },
+    child: [
+      {
+        state: "view-patients",
+        path: "/patients",
+        sidebarProps: {
+          displayText: "Danh sách bệnh nhân",
+          icon: <AccessibleIcon />,
+        },
+      },
+    ],
   },
   {
     state: "appointment",
@@ -59,6 +69,13 @@ const appRoutes = [
         index: true,
         sidebarProps: {
           displayText: "Danh sách nhân viên",
+          icon: <ManIcon />,
+        },
+      },
+      {
+        path: "/manage-staff",
+        sidebarProps: {
+          displayText: "Quản lý nhân viên",
           icon: <ManIcon />,
         },
       },

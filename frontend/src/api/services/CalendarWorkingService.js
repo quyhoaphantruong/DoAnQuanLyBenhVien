@@ -13,6 +13,17 @@ class CalendarWorkingService {
       return error;
     }
   };
+
+  layLichLamViecNhanVien = async (idNhanVien) => {
+    try {
+      const response = await AxiosInstance.get(
+        `working-calendar/personnel/${idNhanVien}`
+      );
+      return response;
+    } catch (error) {
+      return error;
+    }
+  };
 }
 
 export default new CalendarWorkingService();

@@ -1,16 +1,14 @@
 package com.doanbenhvien.DoAnBenhVien.Service;
 
 import com.doanbenhvien.DoAnBenhVien.DTO.NhanVienDTO;
+import com.doanbenhvien.DoAnBenhVien.DTO.Request.BenhNhanRequest;
 import com.doanbenhvien.DoAnBenhVien.DTO.Request.SigninRequest;
 import com.doanbenhvien.DoAnBenhVien.DTO.Response.ErrorResponse;
-import com.doanbenhvien.DoAnBenhVien.Repository.TaiKhoanRepository;
 import com.doanbenhvien.DoAnBenhVien.Utils.ErrorHandler;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.StoredProcedureQuery;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -23,16 +21,20 @@ public class AuthenticationService {
     @Autowired
     private ErrorHandler errorHandler;
 
-    public ResponseEntity<?> dangKyBenhNhan(String dienThoai, String matKhau) {
+    public ResponseEntity<?> dangKyBenhNhan(BenhNhanRequest benhNhanRequest) {
         StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("DANG_KY");
 
-        // Registering the parameters with the correct types and modes
-        storedProcedure.registerStoredProcedureParameter("DIENTHOAI", String.class, ParameterMode.IN);
+        storedProcedure.registerStoredProcedureParameter("SODIENTHOAI", String.class, ParameterMode.IN);
         storedProcedure.registerStoredProcedureParameter("MATKHAU", String.class, ParameterMode.IN);
+        storedProcedure.registerStoredProcedureParameter("TEN", String.class, ParameterMode.IN);
+        storedProcedure.registerStoredProcedureParameter("GIOITINH", String.class, ParameterMode.IN);
+        storedProcedure.registerStoredProcedureParameter("EMAIL", String.class, ParameterMode.IN);
 
-        // Setting the parameter values
-        storedProcedure.setParameter("DIENTHOAI", dienThoai);
-        storedProcedure.setParameter("MATKHAU", matKhau);
+        storedProcedure.setParameter("SODIENTHOAI", benhNhanRequest.getSoDienThoai());
+        storedProcedure.setParameter("MATKHAU", benhNhanRequest.getMatKhau());
+        storedProcedure.setParameter("EMAIL", benhNhanRequest.getEmail());
+        storedProcedure.setParameter("GIOITINH", benhNhanRequest.getGioiTinh());
+        storedProcedure.setParameter("TEN", benhNhanRequest.getTen());
 
         // Executing the stored procedure
         try {
@@ -82,4 +84,5 @@ public class AuthenticationService {
         errorResponse.setError("Lỗi hệ thống");
         return ResponseEntity.internalServerError().body(errorResponse);
     }
+
 }

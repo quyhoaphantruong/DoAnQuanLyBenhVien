@@ -7,8 +7,10 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import PersonnelService from "../../api/services/PersonnelService";
-import { MenuItem, Select } from "@mui/material";
+import { Button, MenuItem, Select } from "@mui/material";
 import { nhanVienRoles } from "../../constants/StaffRoles";
+import { useDispatch } from "react-redux";
+import { setDsBachNhan } from "../../redux/features/staffSlice";
 
 function createData(
   idNhanVien,
@@ -41,6 +43,7 @@ export default function StaffViewPage() {
   const [dsNhanVienBanDau, setDsNhanVienBanDau] = useState([]);
   const [dsNhanVien, setDsNhanVien] = useState([]);
   const [locLoaiNhanVien, setLocLoaiNhanVien] = useState("All");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const dsNhanVien = async () => {
@@ -48,6 +51,7 @@ export default function StaffViewPage() {
         const res = await PersonnelService.xemDanhSachNhanVien();
         console.log(res.data);
         if (res?.status == 200) {
+          dispatch(setDsBachNhan(res.data));
           setDsNhanVienBanDau(res.data);
           setDsNhanVien(res.data);
         }

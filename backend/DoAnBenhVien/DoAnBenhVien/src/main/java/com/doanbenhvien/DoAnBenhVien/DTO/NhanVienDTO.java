@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class NhanVienDTO {
-    private String idNhanVien;
+    private Integer idNhanVien;
     private String ten;
     private Date ngaySinh;
     private String diaChi;
@@ -16,7 +16,7 @@ public class NhanVienDTO {
     private String email;
     private String loaiNhanVien;
 
-    public NhanVienDTO(String idNhanVien, String ten, Date ngaySinh, String diaChi, String soDienThoai, String email, String loaiNhanVien) {
+    public NhanVienDTO(Integer idNhanVien, String ten, Date ngaySinh, String diaChi, String soDienThoai, String email, String loaiNhanVien) {
         this.idNhanVien = idNhanVien;
         this.ten = ten;
         this.ngaySinh = ngaySinh;

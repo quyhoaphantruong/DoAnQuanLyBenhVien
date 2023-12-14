@@ -9,6 +9,8 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function createData(
   idNhanVien,
@@ -38,6 +40,8 @@ const rows = [
 ];
 
 function CalendarStaffPage() {
+  const { dsNhanVien } = useSelector((state) => state.staff);
+  console.log(dsNhanVien);
   return (
     <div>
       <Typography variant="h4">Danh sách nhân viên</Typography>
@@ -52,7 +56,7 @@ function CalendarStaffPage() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows?.map((row) => (
+            {dsNhanVien?.map((row) => (
               <TableRow
                 key={row.idNhanVien}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -63,7 +67,13 @@ function CalendarStaffPage() {
                 <TableCell align="right">{row?.ten}</TableCell>
                 <TableCell align="right">{row?.loaiNhanVien}</TableCell>
                 <TableCell align="right">
-                  <Button variant="contained">Xem lịch làm việc</Button>
+                  <Button
+                    as={Link}
+                    to={`/calendar-staff/${row?.idNhanVien}`}
+                    variant="contained"
+                  >
+                    Xem lịch làm việc
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
