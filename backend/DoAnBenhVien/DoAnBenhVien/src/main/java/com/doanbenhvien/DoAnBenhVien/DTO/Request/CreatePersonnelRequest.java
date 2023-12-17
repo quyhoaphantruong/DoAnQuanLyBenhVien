@@ -6,7 +6,6 @@ import java.util.Date;
 
 @Data
 public class CreatePersonnelRequest {
-    private String idNhanVien;
     private String ten;
     private Date ngaySinh;
     private String diaChi;

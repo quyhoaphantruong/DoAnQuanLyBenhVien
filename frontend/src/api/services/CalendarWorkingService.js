@@ -2,6 +2,7 @@ import AxiosInstance from "../../configs/AxiosInstance";
 
 class CalendarWorkingService {
   taoLichLamViec = async (lichLamViecInfo) => {
+    console.log(lichLamViecInfo);
     try {
       const response = await AxiosInstance.post(
         "/working-calendar",

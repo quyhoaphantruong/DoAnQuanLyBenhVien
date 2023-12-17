@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from "./features/userSlice";
 import appStateReducer from "./features/appStateSlice";
+import treatmentPlanReducer from "./features/treatmentPlanSlice";
 import staffReducer from "./features/staffSlice";
 
 import { persistReducer } from "redux-persist";
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   user: persistReducer(userPersistConfig, userReducer),
   appState: appStateReducer,
   staff: persistReducer(staffPersitConfig, staffReducer),
+  treatmentPlan: treatmentPlanReducer,
 });
 
 export const store = configureStore({

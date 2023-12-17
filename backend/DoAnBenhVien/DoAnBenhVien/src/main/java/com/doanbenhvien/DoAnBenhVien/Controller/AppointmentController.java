@@ -24,7 +24,7 @@ public class AppointmentController {
         return appointmentService.taoCuocHen(taoCuocHenRequest);
     }
 
-    @GetMapping("/free/dentist")
+    @PostMapping("/free/dentist")
     public ResponseEntity<?> timNhaSiRanh(@RequestBody TimNhaSiRanhRequest timNhaSiRanhRequest) {
         return appointmentService.timNhaSiRanh(timNhaSiRanhRequest);
     }

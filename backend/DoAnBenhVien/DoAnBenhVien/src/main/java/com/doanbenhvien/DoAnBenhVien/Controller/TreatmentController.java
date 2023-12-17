@@ -1,9 +1,12 @@
 package com.doanbenhvien.DoAnBenhVien.Controller;
 
+import com.doanbenhvien.DoAnBenhVien.DTO.DanhMucDieuTriDTO;
+import com.doanbenhvien.DoAnBenhVien.DTO.DieuTriDTO;
 import com.doanbenhvien.DoAnBenhVien.DTO.KeHoachDieuTriCuTheDTO;
 import com.doanbenhvien.DoAnBenhVien.DTO.Request.CapNhatKeHoachDieuTriDTO;
 import com.doanbenhvien.DoAnBenhVien.DTO.Request.TaoChiTietDieuTriDTO;
 import com.doanbenhvien.DoAnBenhVien.DTO.Request.TaoKeHoachDieuTriRequest;
+import com.doanbenhvien.DoAnBenhVien.Service.TreatmentDataService;
 import com.doanbenhvien.DoAnBenhVien.Service.TreatmentService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,8 @@ import java.util.List;
 public class TreatmentController {
     @Autowired
     private TreatmentService treatmentService;
+    @Autowired
+    private TreatmentDataService treatmentDataService;
 
     @GetMapping("/treatment/{idKeHoachDieuTri}")
     public ResponseEntity<List<KeHoachDieuTriCuTheDTO>> xemKeHoachDieuTriCuThe(@PathVariable(name = "idKeHoachDieuTri") Integer idKeHoachDieuTri) {
@@ -35,5 +40,13 @@ public class TreatmentController {
     @PostMapping("/treatment-details")
     public ResponseEntity<?>  themChiTietDieuTri(@RequestBody TaoChiTietDieuTriDTO taoChiTietDieuTriDTO) {
         return treatmentService.themChiTietDieuTri(taoChiTietDieuTriDTO);
+    }
+    @GetMapping("/category-treatments")
+    public ResponseEntity<List<DanhMucDieuTriDTO>> xemDanhMucDieuTri() {
+        return treatmentDataService.xemDanhMucDieuTri();
+    }
+    @GetMapping("/treatment-services/{id}")
+    public ResponseEntity<List<DieuTriDTO>> xemDanhSachDieuTri(@PathVariable(name = "id") Integer idDanhMucDieuTri) {
+        return treatmentDataService.xemDanhSachDieuTri(idDanhMucDieuTri);
     }
 }

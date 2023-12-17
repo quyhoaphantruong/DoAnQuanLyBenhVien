@@ -12,11 +12,6 @@ import PersonnelService from "../api/services/PersonnelService";
 
 const fields = [
   {
-    label: "Id Nhân viên",
-    type: "text",
-    key: "idNhanVien",
-  },
-  {
     label: "Tên nhân viên",
     type: "text",
     key: "ten",
@@ -50,7 +45,6 @@ const fields = [
 
 function CreateStaffPage() {
   const [nhanVien, setNhanVien] = useState({
-    idNhanVien: "",
     ten: "",
     ngaySinh: "",
     diaChi: "",
@@ -94,7 +88,7 @@ function CreateStaffPage() {
               onChange={handleChange}
             >
               <MenuItem value={"Quản trị viên"}>Quản trị viên</MenuItem>
-              <MenuItem value={"Nhân viên"}>Nhân viên</MenuItem>
+              <MenuItem value={"Nhân viên"}>Lễ tân</MenuItem>
               <MenuItem value={"Nha sĩ"}>Nha sĩ</MenuItem>
             </Select>
           ) : (
@@ -109,6 +103,9 @@ function CreateStaffPage() {
                 label={field.label}
                 type={field.type}
                 onChange={handleChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
               />
             </FormGroup>
           )

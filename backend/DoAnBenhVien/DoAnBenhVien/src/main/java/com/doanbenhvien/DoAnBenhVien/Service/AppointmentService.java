@@ -1,6 +1,7 @@
 package com.doanbenhvien.DoAnBenhVien.Service;
 
 import com.doanbenhvien.DoAnBenhVien.DTO.CuocHenDTO;
+import com.doanbenhvien.DoAnBenhVien.DTO.NhaSiRanhDTO;
 import com.doanbenhvien.DoAnBenhVien.DTO.Request.TaoCuocHenRequest;
 import com.doanbenhvien.DoAnBenhVien.DTO.Request.TimNhaSiRanhRequest;
 import com.doanbenhvien.DoAnBenhVien.Utils.ErrorHandler;
@@ -81,14 +82,15 @@ public class AppointmentService {
     public ResponseEntity<?> timNhaSiRanh(TimNhaSiRanhRequest timNhaSiRanhRequest) {
         try {
             String queryStr = "DECLARE @DS_NHASI TABLE (\n" +
-                    "        ID_NHANVIEN INT\n" +
+                    "        ID_NHANVIEN INT,\n" +
+                    "\t\tTEN NVARCHAR(50)\n" +
                     "    );\n" +
                     "\n" +
                     "\tDECLARE @GIO_KETTHUC DATETIME;\n" +
                     "\tSELECT @GIO_KETTHUC = DATEADD(HOUR, 1, :GIO_BATDAU)\n" +
                     "\n" +
-                    "    INSERT INTO @DS_NHASI (ID_NHANVIEN)\n" +
-                    "    SELECT NV.ID_NHANVIEN\n" +
+                    "    INSERT INTO @DS_NHASI (ID_NHANVIEN, TEN)\n" +
+                    "    SELECT NV.ID_NHANVIEN, NV.TEN\n" +
                     "    FROM NHANVIEN NV\n" +
                     "    JOIN LICHLAMVIEC LLV ON LLV.ID_NHANVIEN = NV.ID_NHANVIEN\n" +
                     "\tWHERE NV.LOAINHANVIEN = N'Nha sĩ'\n" +
@@ -99,19 +101,27 @@ public class AppointmentService {
                     "        WHERE CH.THOIGIAN >= :GIO_BATDAU AND DATEADD(HOUR, 1, CH.THOIGIAN) <= @GIO_KETTHUC\n" +
                     "    );\n" +
                     "\n" +
-                    "    SELECT DS.ID_NHANVIEN, 1 AS DA_KHAM\n" +
+                    "    SELECT DS.ID_NHANVIEN, DS.TEN, 1 AS DA_KHAM\n" +
                     "    FROM @DS_NHASI DS WHERE DS.ID_NHANVIEN IN \n" +
                     "\t(SELECT CH.ID_NHASI FROM CUOCHEN CH WHERE CH.ID_BENHNHAN = :ID_BENHNHAN)\n" +
                     "\tUNION\n" +
-                    "\tSELECT DS.ID_NHANVIEN, 0 AS DA_KHAM\n" +
+                    "\tSELECT DS.ID_NHANVIEN, DS.TEN, 0 AS DA_KHAM\n" +
                     "\tFROM @DS_NHASI DS WHERE DS.ID_NHANVIEN NOT IN\n" +
                     "\t(SELECT CH.ID_NHASI FROM CUOCHEN CH WHERE CH.ID_BENHNHAN = :ID_BENHNHAN)";
 
             Query query = entityManager.createNativeQuery(queryStr);
             query.setParameter("ID_BENHNHAN", timNhaSiRanhRequest.getIdBenhNhan());
             query.setParameter("GIO_BATDAU", timNhaSiRanhRequest.getGioBatDau());
-
-            return ResponseEntity.ok(query.getResultList());
+            List<Object[]> objects = query.getResultList();
+            List<NhaSiRanhDTO> results = new ArrayList<>();
+            for (Object[] obj : objects) {
+                NhaSiRanhDTO dto = new NhaSiRanhDTO();
+                dto.setIdNhanVien((Integer) obj[0]);
+                dto.setTen((String) obj[1]);
+                dto.setDaKham((Integer) obj[2]);
+                results.add(dto);
+            }
+            return ResponseEntity.ok(results);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Lỗi hệ thống");

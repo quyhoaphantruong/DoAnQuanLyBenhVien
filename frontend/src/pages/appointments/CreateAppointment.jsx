@@ -1,5 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
+import AppointmentForm from "../../components/appointments/AppointmentForm";
+import FindFreeDentist from "./FindFreeDentist";
 
 const fields = [];
 
@@ -13,11 +15,7 @@ function CreateAppointment() {
     soDienThoai: "",
     loaiNhanVien: "Quản trị viên",
   });
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    console.log(name, value);
-    setCuocHen({ ...cuocHen, [name]: value });
-  };
+
   const taoNhanVien = async () => {
     console.log(cuocHen);
   };
@@ -25,7 +23,9 @@ function CreateAppointment() {
   return (
     <div>
       <Typography variant="h3">Tạo cuộc hẹn</Typography>
-      <Box as="form">
+      {/* Tìm nha sĩ rảnh */}
+      <FindFreeDentist />
+      <Box mt={3} as="form">
         {/* {fields.map((field, idx) =>
           field.type === "select" ? (
             <Select
@@ -58,9 +58,7 @@ function CreateAppointment() {
           )
         )} */}
       </Box>
-      <Button variant="contained" onClick={taoNhanVien}>
-        Tạo cuộc hẹn
-      </Button>
+      <AppointmentForm handleSubmit={taoNhanVien} />
     </div>
   );
 }

@@ -5,16 +5,26 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import dayjs from "dayjs";
 import CalendarWorkingService from "../../api/services/CalendarWorkingService";
+import dayjs from "dayjs";
 
 const initState = {
-  idLichLamViec: "",
   idNhanVien: "",
   phongKham: "",
-  gioBatDau: dayjs("2022-01-28T09:30:00.000Z"),
-  gioKetThuc: dayjs("2022-01-28T10:30:00.000Z"),
+  gioBatDau: dayjs(),
+  gioKetThuc: dayjs(),
 };
+
+function processDateTime(datetime) {
+  let date = datetime.$d;
+  let formattedDate = `${date.getFullYear()}-${(
+    "0" +
+    (date.getMonth() + 1)
+  ).slice(-2)}-${("0" + date.getDate()).slice(-2)}T${(
+    "0" + date.getHours()
+  ).slice(-2)}:${("0" + date.getMinutes()).slice(-2)}`;
+  return formattedDate;
+}
 function CreateCalendar() {
   const [calendar, setCalendar] = useState(initState);
 
@@ -25,15 +35,14 @@ function CreateCalendar() {
   };
 
   const taoLichLamViec = async () => {
-    console.log(calendar);
     try {
       const formattedCalendar = {
-        idLichLamViec: calendar.idLichLamViec,
         idNhanVien: calendar.idNhanVien,
         phongKham: calendar.phongKham,
-        gioBatDau: calendar.gioBatDau.$d,
-        gioKetThuc: calendar.gioKetThuc.$d,
+        gioBatDau: processDateTime(calendar.gioBatDau),
+        gioKetThuc: processDateTime(calendar.gioKetThuc),
       };
+
       const res = await CalendarWorkingService.taoLichLamViec(
         formattedCalendar
       );
@@ -58,9 +67,12 @@ function CreateCalendar() {
                   label={field.label}
                   name={field.name}
                   value={calendar[field.name]}
-                  onChange={(newValue) =>
-                    setCalendar({ ...calendar, [field.name]: newValue })
-                  }
+                  onChange={(newValue) => {
+                    setCalendar({
+                      ...calendar,
+                      [field.name]: newValue,
+                    });
+                  }}
                 />
               </DemoContainer>
             </LocalizationProvider>

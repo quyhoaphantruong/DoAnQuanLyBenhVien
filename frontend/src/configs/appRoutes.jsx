@@ -3,6 +3,9 @@ import AccessibleIcon from "@mui/icons-material/Accessible";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ManIcon from "@mui/icons-material/Man";
+import treatmentsRoutes from "./constantsForAppRoutes/treatmentsRoutes";
+import drugRoutes from "./constantsForAppRoutes/drugRoutes";
+// import drugRoutes from "./constantsForAppRoutes/drugRoutes";
 
 const appRoutes = [
   {
@@ -107,6 +110,8 @@ const appRoutes = [
       },
     ],
   },
+  treatmentsRoutes,
+  drugRoutes,
 ];
 
 export default appRoutes;

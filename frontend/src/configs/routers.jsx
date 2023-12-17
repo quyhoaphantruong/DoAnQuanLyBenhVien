@@ -12,6 +12,7 @@ import StaffViewPage from "../pages/staff/StaffViewPage";
 import CalendarStaffPage from "../pages/working-calendar/CalendarStaffPage";
 import CalendarEachStaff from "../pages/working-calendar/CalendarEachStaff";
 import ManageStaffPage from "../pages/staff/ManageStaffPage";
+import CreateTreatMentPage from "../pages/treatments/CreateTreatMentPage";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/calendar-staff/:idNhanVien",
         element: <CalendarEachStaff />,
+      },
+      {
+        path: "create-treatment",
+        element: <CreateTreatMentPage />,
       },
     ],
   },

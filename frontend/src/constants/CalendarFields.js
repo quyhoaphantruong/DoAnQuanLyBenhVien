@@ -1,10 +1,5 @@
 export const calendarFields = [
   {
-    label: "Id lịch làm việc",
-    type: "text",
-    name: "idLichLamViec",
-  },
-  {
     label: "ID Nhân viên",
     type: "text",
     name: "idNhanVien",
