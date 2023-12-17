@@ -84,14 +84,69 @@ END;
 
 -- tạo răng và mặt
 INSERT INTO RANG(TEN_RANG)
-VALUES (N'RĂNG 1')
+VALUES (N'Răng chải trên phải 1') -- răng chải
+VALUES (N'Răng chải trên phải 2')
+VALUES (N'Răng chải trên trái 1')
+VALUES (N'Răng chải trên trái 2')
+VALUES (N'Răng cắt trên phải 1')-- răng cắt
+VALUES (N'Răng cắt trên trái 1')
+VALUES (N'Răng nhai đầu trên phải 1')--răng nhai đầu
+VALUES (N'Răng nhai đầu trên phải 2')
+VALUES (N'Răng nhai đầu trên trái 1')
+VALUES (N'Răng nhai đầu trên trái 2')
+VALUES (N'Răng nhai trên phải 1')--răng nhai
+VALUES (N'Răng nhai trên phải 2')
+VALUES (N'Răng nhai trên phải 3')
+VALUES (N'Răng nhai trên trái 1')
+VALUES (N'Răng nhai trên trái 2')
+VALUES (N'Răng nhai trên phải 3')
+
+VALUES (N'Răng chải dưới phải 1') -- răng chải
+VALUES (N'Răng chải dưới phải 2')
+VALUES (N'Răng chải dưới trái 1')
+VALUES (N'Răng chải dưới trái 2')
+VALUES (N'Răng cắt dưới phải 1')-- răng cắt
+VALUES (N'Răng cắt dưới trái 1')
+VALUES (N'Răng nhai đầu dưới phải 1')--răng nhai đầu
+VALUES (N'Răng nhai đầu dưới phải 2')
+VALUES (N'Răng nhai đầu dưới trái 1')
+VALUES (N'Răng nhai đầu dưới trái 2')
+VALUES (N'Răng nhai dưới phải 1')--răng nhai
+VALUES (N'Răng nhai dưới phải 2')
+VALUES (N'Răng nhai dưới phải 3')
+VALUES (N'Răng nhai dưới trái 1')
+VALUES (N'Răng nhai dưới trái 2')
+VALUES (N'Răng nhai dưới phải 3')
 
 INSERT INTO MAT(LOAIMAT, TENMAT)
-VALUES ('L', 'RĂNG 1')
-
+VALUES ('L', 'Lingual')
+VALUES ('F', 'Facial')
+VALUES ('D', 'Distal')
+VALUES ('M', 'Mesial')
+VALUES ('T', 'Top') 
+VALUES ('R', 'Root') 
 -- THÊM DANH MỤC ĐIỀU TRỊ VÀ ĐIỀU TRỊ
 INSERT INTO DANHMUC_DIEUTRI(TENDANHMUC)
-VALUES (N'NHỔ')
+VALUES 
+   (N'Chăm sóc nha khoa chung'),
+   (N'Phục hình răng'),
+   (N'Trám răng'),
+   (N'Nhổ răng'),
+   (N'Chụp X-quang răng');
 
 INSERT INTO DIEUTRI(ID_DANHMUC_DIEUTRI, TENDIEUTRI, PHI)
-VALUES (1, N'NHỔ RĂNG', 20000)
+   (1, N'Dịch vụ chăm sóc tổng thể', 80),
+   (1, N'Tẩy trắng răng', 120),
+   (1, N'Đánh bóng răng', 50),
+   (2, N'Phục hình răng sứ', 150),
+   (2, N'Phục hình răng sứ cao cấp', 200),
+   (2, N'Phục hình răng sứ Zirconia', 250),
+   (3, N'Trám răng composite', 50),
+   (3, N'Trám răng sứ', 100),
+   (3, N'Trám răng bảo vệ', 70),
+   (4, N'Nhổ răng mặt định vị', 120),
+   (4, N'Nhổ răng khôn', 150),
+   (4, N'Nhổ răng mọc sai', 100),
+   (5, N'Chụp X-quang răng cắt lớp', 100),
+   (5, N'Chụp X-quang răng toàn diện', 150),
+   (5, N'Chụp X-quang răng nội soi', 180)

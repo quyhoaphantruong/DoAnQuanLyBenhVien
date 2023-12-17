@@ -22,8 +22,7 @@ public class TreatmentService {
     @Autowired
     EntityManager entityManager;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-
+    
     public ResponseEntity<?> taoKeHoachDieuTri(TaoKeHoachDieuTriRequest taoKeHoachDieuTriRequest) {
         StoredProcedureQuery query = entityManager.createStoredProcedureQuery("THEM_KEHOACH_DIEUTRI");
         query.registerStoredProcedureParameter("NOIDUNG", String.class, ParameterMode.IN);
