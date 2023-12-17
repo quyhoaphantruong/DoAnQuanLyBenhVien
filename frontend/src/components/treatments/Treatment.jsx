@@ -27,6 +27,7 @@ const TreatmentsComponent = () => {
       setLoadingCategories(true);
       try {
         const response = await TreatmentDataService.xemDanhSachDanhMucDieuTri();
+
         console.log(response);
         setCategories(response.data);
       } catch (error) {

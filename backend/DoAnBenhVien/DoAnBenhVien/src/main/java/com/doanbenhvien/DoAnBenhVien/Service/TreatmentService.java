@@ -7,7 +7,6 @@ import com.doanbenhvien.DoAnBenhVien.DTO.Request.TaoKeHoachDieuTriRequest;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.StoredProcedureQuery;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,17 +30,22 @@ public class TreatmentService {
         query.registerStoredProcedureParameter("CHANDOAN", String.class, ParameterMode.IN);
         query.registerStoredProcedureParameter("ID_BENHNHAN", Integer.class, ParameterMode.IN);
 
+        query.registerStoredProcedureParameter("OUTPUT_ID", Integer.class, ParameterMode.OUT);
+
         query.setParameter("NOIDUNG", taoKeHoachDieuTriRequest.getNoiDung());
         query.setParameter("CHANDOAN", taoKeHoachDieuTriRequest.getChanDoan());
         query.setParameter("ID_BENHNHAN", taoKeHoachDieuTriRequest.getIdBenhNhan());
 
+
         try {
             query.execute();
-            return ResponseEntity.ok("Tạo kế hoạch điều trị thành công");
+            Integer idKeHoachDieuTri = (Integer) query.getOutputParameterValue("OUTPUT_ID");
+            System.out.println(query.getOutputParameterValue("OUTPUT_ID"));
+            System.out.println(idKeHoachDieuTri);
+            return ResponseEntity.ok(idKeHoachDieuTri);
         } catch(Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
     }
 
     @Transactional

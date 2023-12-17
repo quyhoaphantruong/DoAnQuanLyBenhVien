@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FormControl,
   InputLabel,
@@ -13,20 +13,50 @@ import {
   Paper,
 } from "@mui/material";
 import { useSelector } from "react-redux";
+import TeethFacialTypeService from "../../api/services/TeethFacialTypeService";
+import TreatmentService from "../../api/services/TreatmentService";
 
 const TeethAndFacialSelection = ({ selectedTreatment }) => {
   const [selectedTeeth, setSelectedTeeth] = useState([]);
   const [selectedFacialType, setSelectedFacialType] = useState("");
+  const [selectedFacialId, setSelectedFacialId] = useState("");
+  const [selectedTeethIds, setSelectedTeethIds] = useState([]);
   const [reviewOpen, setReviewOpen] = useState(false);
+  const [teeth, setTeeth] = useState([]);
+  const [facialTypes, setFacialTypes] = useState([]);
   const { keHoachDieuTri } = useSelector((state) => state.treatmentPlan);
+
+  useEffect(() => {
+    const getTeethAndFacialTypes = async () => {
+      try {
+        const rangResponse = await TeethFacialTypeService.xemDanhSachRang();
+        const matResponse = await TeethFacialTypeService.xemDanhSachMat();
+        if (rangResponse?.status === 200 && matResponse?.status === 200) {
+          setTeeth(rangResponse.data);
+          setFacialTypes(matResponse.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getTeethAndFacialTypes();
+  }, []);
 
   const toggleReviewOpen = () => {
     setReviewOpen((prev) => !prev);
     console.log(reviewOpen);
   };
 
-  const handleToothChange = (event) => {
+  const handleToothChange = (event, tooth) => {
     const { value } = event.target;
+    if (event.target.checked) {
+      setSelectedTeethIds([...selectedTeethIds, tooth.idRang]);
+    } else {
+      const newSelectedTeethIds = selectedTeethIds.filter(
+        (oldTooth) => oldTooth.idRang !== tooth.idRang
+      );
+      setSelectedTeethIds(newSelectedTeethIds);
+    }
     const currentIndex = selectedTeeth.indexOf(value);
     const newSelectedTeeth = [...selectedTeeth];
 
@@ -47,12 +77,37 @@ const TeethAndFacialSelection = ({ selectedTreatment }) => {
     console.log(
       "Selected Treatment:",
       selectedTreatment,
-      "Selected Teeth:",
-      selectedTeeth,
+      "Selected Teeth Ids:",
+      selectedTeethIds,
       "Selected Facial Type:",
       selectedFacialType
     );
+    const payload = {
+      idKeHoachDieuTri: 1,
+      idDieuTri: selectedTreatment.idDieuTri,
+      idRang: selectedTeethIds[0],
+      loaiMat: selectedFacialType,
+    };
+    console.log(payload);
     try {
+      const keHoachDieuTriRes = await TreatmentService.taoKeHoachDieuTri(
+        keHoachDieuTri
+      );
+      if (keHoachDieuTriRes?.status == 200) {
+        let count = 0;
+        for (const selectedToothId of selectedTeethIds) {
+          const chiTietDieuTriRes = await TreatmentService.taoChiTietDieuTri({
+            idKeHoachDieuTri: keHoachDieuTriRes?.data,
+            idRang: selectedToothId,
+            idDieuTri: selectedTreatment.idDieuTri,
+            loaiMat: selectedFacialType,
+          });
+          if (chiTietDieuTriRes?.status == 200) {
+            count += 1;
+          }
+        }
+        console.log(count);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -61,37 +116,42 @@ const TeethAndFacialSelection = ({ selectedTreatment }) => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Typography variant="h6">{selectedTreatment?.name}</Typography>
+        <Typography variant="h6">{selectedTreatment?.tenDieuTri}</Typography>
       </Grid>
       <Grid item xs={6}>
         <FormGroup>
-          <Typography variant="subtitle1">Select Teeth</Typography>
-          {["Tooth 1", "Tooth 2", "Tooth 3"].map((tooth) => (
+          <Typography variant="subtitle1">Chọn răng</Typography>
+          {teeth?.map((tooth) => (
             <FormControlLabel
-              key={tooth}
+              key={tooth.idRang}
               control={
                 <Checkbox
-                  checked={selectedTeeth.includes(tooth)}
-                  onChange={handleToothChange}
-                  value={tooth}
+                  checked={selectedTeeth.includes(tooth.tenRang)}
+                  onChange={(event) => handleToothChange(event, tooth)}
+                  value={tooth.tenRang}
                 />
               }
-              label={tooth}
+              label={tooth.tenRang}
             />
           ))}
         </FormGroup>
       </Grid>
       <Grid item xs={6}>
         <FormControl fullWidth>
-          <InputLabel>Select Facial Type</InputLabel>
-          <Select value={selectedFacialType} onChange={handleFacialTypeChange}>
-            {["Facial Type 1", "Facial Type 2", "Facial Type 3"].map(
-              (facialType) => (
-                <MenuItem key={facialType} value={facialType}>
-                  {facialType}
-                </MenuItem>
-              )
-            )}
+          <InputLabel>Chọn loại mặt</InputLabel>
+          <Select
+            value={selectedFacialType}
+            onChange={(event) => handleFacialTypeChange(event)}
+          >
+            {facialTypes?.map((facialType) => (
+              <MenuItem
+                key={facialType}
+                value={facialType?.loaiMat}
+                onClick={() => setSelectedFacialId(facialType.loaiMat)}
+              >
+                {facialType?.tenMat}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Grid>

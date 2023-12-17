@@ -9,6 +9,7 @@ class TreatmentService {
       return error;
     }
   };
+
   taoChiTietDieuTri = async (chiTietDieuTri) => {
     try {
       const response = await AxiosInstance.post(

@@ -48,6 +48,8 @@ function CreateCalendar() {
       );
       if (res?.status == 200) {
         alert(res.data);
+      } else {
+        alert("error");
       }
       setCalendar(initState);
     } catch (error) {
