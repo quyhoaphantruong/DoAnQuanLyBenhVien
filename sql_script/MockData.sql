@@ -12,31 +12,24 @@ BEGIN
     DECLARE @LOAINHANVIEN NVARCHAR(13) = N'Nha sĩ';
 
     EXEC TAO_NHANVIEN @TEN, @NGAYSINH, @DIACHI, @EMAIL, @SODIENTHOAI, @LOAINHANVIEN;
-
     SET @counter = @counter + 1;
 END;
 
 SELECT * FROM NHANVIEN
+-- TẠO LỊCH LÀM VIỆC 
+EXEC TAO_LICHLAMVIEC 1, 1, '2023-12-01 6:00'
+EXEC TAO_LICHLAMVIEC 2, 1, '2023-12-01 6:00'
+EXEC TAO_LICHLAMVIEC 3, 1, '2023-12-01 6:00'
 
--- TẠO PHÒNG KHÁM
-INSERT INTO PHONGKHAM(DIACHIPK, SDTPK)
-VALUES (N'TÂN BÌNH', '0934567895')
-
-DECLARE @counter INT = 1;
-DECLARE @ID_PHONGKHAM NVARCHAR(10) = 1;
-
-WHILE @counter <= 5
-BEGIN
-    DECLARE @ID_LICHLAMVIEC NVARCHAR(10) = 'LLV_' + CAST(@counter AS NVARCHAR(2));
-    DECLARE @GIO_BATDAU DATETIME = DATEADD(DAY, @counter, GETDATE()); -- Adjust start time
-    DECLARE @GIO_KETTHUC DATETIME = DATEADD(HOUR, 4, @GIO_BATDAU); -- Adding 4 hours to start time
-
-    EXEC TAO_LICH_LAM_VIEC @ID_LICHLAMVIEC, 'NV_1', @ID_PHONGKHAM, @GIO_BATDAU, @GIO_KETTHUC;
-
-    SET @counter = @counter + 1;
-END;
+EXEC TAO_LICHLAMVIEC 1, 1, '2023-12-02 6:00'
+EXEC TAO_LICHLAMVIEC 2, 1, '2023-12-02 13:00'
+EXEC TAO_LICHLAMVIEC 3, 1, '2023-12-02 13:00'
 
 SELECT * FROM LICHLAMVIEC
+-- TẠO PHÒNG KHÁM
+INSERT INTO PHONGKHAM(DIACHIPK, SDTPK)
+VALUES (N'TÂN BÌNH', '0934567895'),
+		(N'NGUYỄN VĂN LUÔNG', '0984578254')
 
 -- TẠO BỆNH NHÂN
 -- Inserting mock data into TAIKHOAN table
@@ -52,9 +45,9 @@ VALUES ('John Doe', N'Nam', 'john@example.com', '0123456789'), -- Existing phone
        ('Alice Smith', N'Nữ', 'alice@example.com', '0909090909'); -- A new phone number
 
 -- TẠO PHÒNG KHÁM
-INSERT INTO PHONGKHAM(ID_PHONGKHAM, DIACHIPK, SDTPK)
-VALUES ('PK1', N'BÌNH TÂN', '0909090909')
-
+EXEC TAO_PHONGKHAM N'BÌNH TÂN', '0854365896'
+SELECT * FROM PHONGKHAM
+GO
 -- TẠO LỊCH LÀM VIỆC
 
 -- TẠO BỆNH NHÂN
@@ -84,8 +77,8 @@ END;
 
 -- tạo răng và mặt
 INSERT INTO RANG(TEN_RANG)
-VALUES (N'Răng chải trên phải 1') -- răng chải
-VALUES (N'Răng chải trên phải 2')
+VALUES (N'Răng chải trên phải 1'), -- răng chải
+		(N'Răng chải trên phải 2')
 VALUES (N'Răng chải trên trái 1')
 VALUES (N'Răng chải trên trái 2')
 VALUES (N'Răng cắt trên phải 1')-- răng cắt
