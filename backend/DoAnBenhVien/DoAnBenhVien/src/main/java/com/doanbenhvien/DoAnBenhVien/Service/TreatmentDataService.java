@@ -30,7 +30,7 @@ public class TreatmentDataService {
         List<DanhMucDieuTriDTO> results = new ArrayList<>();
         for (Object[] obj : resultList) {
             DanhMucDieuTriDTO dto = new DanhMucDieuTriDTO();
-            dto.setIdDanhMucDieuTri((Byte) obj[0]);
+            dto.setIdDanhMucDieuTri((Integer) obj[0]);
             dto.setTenDanhMuc((String) obj[1]);
             results.add(dto);
         }
