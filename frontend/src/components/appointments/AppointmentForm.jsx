@@ -9,10 +9,14 @@ import {
   MenuItem,
 } from "@mui/material";
 import AppointmentService from "../../api/services/AppointmentService";
+import { useDispatch, useSelector } from "react-redux";
+import { setIdBenhNhan } from "../../redux/features/patientSlice";
 
 const AppointmentForm = () => {
+  const { idBenhNhan } = useSelector((state) => state.patient);
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    idBenhNhan: 2,
+    idBenhNhan,
     idNhaSi: 1,
     idTroKham: null,
     idPhongKham: 1,
@@ -23,6 +27,10 @@ const AppointmentForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "idBenhNhan") {
+      dispatch(setIdBenhNhan(value));
+      return;
+    }
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -43,13 +51,16 @@ const AppointmentForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} mt={3}>
         <Grid item xs={6}>
           <TextField
+            InputLabelProps={{
+              shrink: true,
+            }}
             fullWidth
-            label="ID Bệnh Nhân"
+            label="Id bệnh nhân"
             name="idBenhNhan"
-            value={formData.idBenhNhan}
+            value={idBenhNhan}
             onChange={handleChange}
           />
         </Grid>

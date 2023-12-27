@@ -11,21 +11,27 @@ import {
   Typography,
   Grid,
   Paper,
+  Stack,
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import TeethFacialTypeService from "../../api/services/TeethFacialTypeService";
 import TreatmentService from "../../api/services/TreatmentService";
+import TeethAndFacialForm from "./TeethAndFacialForm";
+import SelectedTeethAndFacialTypes from "./SelectedTeethAndFacialTypes";
 
 const TeethAndFacialSelection = ({ selectedTreatment }) => {
-  const [selectedTeeth, setSelectedTeeth] = useState([]);
-  const [selectedFacialType, setSelectedFacialType] = useState("");
-  const [selectedFacialId, setSelectedFacialId] = useState("");
+  const [readyToAddToothAndFacialType, setReadyToAddToothAndFacialtype] =
+    useState(false);
   const [selectedTeethIds, setSelectedTeethIds] = useState([]);
   const [reviewOpen, setReviewOpen] = useState(false);
   const [teeth, setTeeth] = useState([]);
   const [facialTypes, setFacialTypes] = useState([]);
   const { keHoachDieuTri } = useSelector((state) => state.treatmentPlan);
 
+  const { selectedTeethAndFacialTypes } = useSelector(
+    (state) => state.treatmentPlan
+  );
+  console.log(selectedTeethAndFacialTypes);
   useEffect(() => {
     const getTeethAndFacialTypes = async () => {
       try {
@@ -44,69 +50,30 @@ const TeethAndFacialSelection = ({ selectedTreatment }) => {
 
   const toggleReviewOpen = () => {
     setReviewOpen((prev) => !prev);
-    console.log(reviewOpen);
   };
 
-  const handleToothChange = (event, tooth) => {
-    const { value } = event.target;
-    if (event.target.checked) {
-      setSelectedTeethIds([...selectedTeethIds, tooth.idRang]);
-    } else {
-      const newSelectedTeethIds = selectedTeethIds.filter(
-        (oldTooth) => oldTooth.idRang !== tooth.idRang
-      );
-      setSelectedTeethIds(newSelectedTeethIds);
-    }
-    const currentIndex = selectedTeeth.indexOf(value);
-    const newSelectedTeeth = [...selectedTeeth];
-
-    if (currentIndex === -1) {
-      newSelectedTeeth.push(value);
-    } else {
-      newSelectedTeeth.splice(currentIndex, 1);
-    }
-
-    setSelectedTeeth(newSelectedTeeth);
-  };
-
-  const handleFacialTypeChange = (event) => {
-    setSelectedFacialType(event.target.value);
+  const formatTeethAndFacialTypesToString = (teethAndFacialTypes) => {
+    let result = [];
+    teethAndFacialTypes.forEach((item) => {
+      result.push(`${item.tenRang}-${item.tenMat}`);
+    });
+    return result.join(", ");
   };
 
   const handleSubmit = async () => {
-    console.log(
-      "Selected Treatment:",
-      selectedTreatment,
-      "Selected Teeth Ids:",
-      selectedTeethIds,
-      "Selected Facial Type:",
-      selectedFacialType
-    );
-    const payload = {
-      idKeHoachDieuTri: 1,
-      idDieuTri: selectedTreatment.idDieuTri,
-      idRang: selectedTeethIds[0],
-      loaiMat: selectedFacialType,
-    };
-    console.log(payload);
     try {
       const keHoachDieuTriRes = await TreatmentService.taoKeHoachDieuTri(
         keHoachDieuTri
       );
       if (keHoachDieuTriRes?.status == 200) {
-        let count = 0;
         for (const selectedToothId of selectedTeethIds) {
           const chiTietDieuTriRes = await TreatmentService.taoChiTietDieuTri({
             idKeHoachDieuTri: keHoachDieuTriRes?.data,
             idRang: selectedToothId,
             idDieuTri: selectedTreatment.idDieuTri,
-            loaiMat: selectedFacialType,
+            loaiMat: "",
           });
-          if (chiTietDieuTriRes?.status == 200) {
-            count += 1;
-          }
         }
-        console.log(count);
       }
     } catch (error) {
       console.log(error);
@@ -115,46 +82,30 @@ const TeethAndFacialSelection = ({ selectedTreatment }) => {
 
   return (
     <Grid container spacing={2}>
+      {/* Treatments section */}
       <Grid item xs={12}>
         <Typography variant="h6">{selectedTreatment?.tenDieuTri}</Typography>
       </Grid>
-      <Grid item xs={6}>
-        <FormGroup>
-          <Typography variant="subtitle1">Chọn răng</Typography>
-          {teeth?.map((tooth) => (
-            <FormControlLabel
-              key={tooth.idRang}
-              control={
-                <Checkbox
-                  checked={selectedTeeth.includes(tooth.tenRang)}
-                  onChange={(event) => handleToothChange(event, tooth)}
-                  value={tooth.tenRang}
-                />
-              }
-              label={tooth.tenRang}
-            />
-          ))}
-        </FormGroup>
+      {/* Teeth and Facial Types */}
+      <Grid item xs={12}>
+        <Typography variant="subtitle1">Chọn răng và mặt</Typography>
+        {selectedTeethAndFacialTypes && (
+          <SelectedTeethAndFacialTypes
+            selectedTeethAndFacialTypes={selectedTeethAndFacialTypes}
+          />
+        )}
+        {readyToAddToothAndFacialType && (
+          <TeethAndFacialForm teeth={teeth} facialTypes={facialTypes} />
+        )}
+        <Button
+          sx={{ mt: 3 }}
+          variant="contained"
+          onClick={() => setReadyToAddToothAndFacialtype((prev) => !prev)}
+        >
+          Thêm răng và mặt
+        </Button>
       </Grid>
-      <Grid item xs={6}>
-        <FormControl fullWidth>
-          <InputLabel>Chọn loại mặt</InputLabel>
-          <Select
-            value={selectedFacialType}
-            onChange={(event) => handleFacialTypeChange(event)}
-          >
-            {facialTypes?.map((facialType) => (
-              <MenuItem
-                key={facialType}
-                value={facialType?.loaiMat}
-                onClick={() => setSelectedFacialId(facialType.loaiMat)}
-              >
-                {facialType?.tenMat}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Grid>
+      {/* Review information  */}
       <Grid item xs={12}>
         <Button variant="contained" color="primary" onClick={toggleReviewOpen}>
           Xem lại thông tin
@@ -177,11 +128,10 @@ const TeethAndFacialSelection = ({ selectedTreatment }) => {
             Điều trị: {selectedTreatment?.tenDieuTri}
           </Typography>
           <Typography variant="subtitle1">
-            Răng chọn: {selectedTeeth.join(", ")}
+            Danh sách răng và mặt chọn:{" "}
+            {formatTeethAndFacialTypesToString(selectedTeethAndFacialTypes)}
           </Typography>
-          <Typography variant="subtitle1">
-            Loại mặt chọn: {selectedFacialType}
-          </Typography>
+
           <Button variant="contained" color="primary" onClick={handleSubmit}>
             Tạo kế hoạch điều trị
           </Button>

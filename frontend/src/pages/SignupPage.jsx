@@ -9,8 +9,7 @@ import { useState } from "react";
 import AuthenticationService from "../api/services/AuthenticationService";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { patientFields } from "../constants/PatientFields";
-
+const patientFields = [];
 const initState = {
   soDienThoai: "",
   matKhau: "",
@@ -58,7 +57,7 @@ function SignupPage() {
           Đăng ký bệnh nhân
         </Typography>
         <Box component="form" noValidate sx={{ mt: 1 }}>
-          {patientFields.map((field, idx) => (
+          {patientFields?.map((field, idx) => (
             <TextField
               key={idx}
               margin="normal"

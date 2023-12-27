@@ -10,6 +10,8 @@ import {
   Box,
 } from "@mui/material";
 import AppointmentService from "../../api/services/AppointmentService";
+import { useDispatch, useSelector } from "react-redux";
+import { setIdBenhNhan } from "../../redux/features/patientSlice";
 
 const style = {
   position: "absolute",
@@ -26,8 +28,10 @@ const style = {
 function FindFreeDentist() {
   const [openModal, setOpenModal] = useState(false);
   const [freeDentists, setFreeDentists] = useState([]);
-  const [idBenhNhan, setIdBenhNhan] = useState("");
   const [gioBatDau, setGioBatDau] = useState("");
+  const { idBenhNhan } = useSelector((state) => state.patient);
+
+  const dispatch = useDispatch();
 
   const handleFindFreeDentist = async () => {
     try {
@@ -55,7 +59,7 @@ function FindFreeDentist() {
       <TextField
         label="ID Bệnh Nhân"
         value={idBenhNhan}
-        onChange={(e) => setIdBenhNhan(e.target.value)}
+        onChange={(e) => dispatch(setIdBenhNhan(e.target.value))}
         variant="outlined"
         fullWidth
         margin="normal"

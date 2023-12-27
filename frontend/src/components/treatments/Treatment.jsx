@@ -7,17 +7,15 @@ import {
   CircularProgress,
   ListItemButton,
 } from "@mui/material";
-import {
-  mockTreatmentCategories,
-  mockTreatments,
-} from "../../constants/TreatmentMockData";
+import { mockTreatments } from "../../constants/TreatmentMockData";
 import TeethAndFacialSelection from "./TeethAndFacialSelection";
 import TreatmentDataService from "../../api/services/TreatmentDataService";
+import { formatToVND } from "../../utilities/formatPrice";
 
 const TreatmentsComponent = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedTreatment, setSelectedTreatment] = useState(null);
+  const [selectedTreatment, setSelectedTreatment] = useState(true);
   const [treatments, setTreatments] = useState([]);
   const [loadingCategories, setLoadingCategories] = useState(false);
   const [loadingTreatments, setLoadingTreatments] = useState(false);
@@ -92,7 +90,7 @@ const TreatmentsComponent = () => {
               >
                 <ListItemText
                   primary={treatment.tenDieuTri}
-                  secondary={treatment?.phi}
+                  secondary={formatToVND(treatment?.phi)}
                 />
               </ListItemButton>
             ))}

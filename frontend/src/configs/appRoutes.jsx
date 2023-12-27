@@ -5,6 +5,8 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ManIcon from "@mui/icons-material/Man";
 import treatmentsRoutes from "./constantsForAppRoutes/treatmentsRoutes";
 import drugRoutes from "./constantsForAppRoutes/drugRoutes";
+import paymentRoutes from "./constantsForAppRoutes/paymentRoutes";
+import patientRoutes from "./constantsForAppRoutes/patientRoutes";
 // import drugRoutes from "./constantsForAppRoutes/drugRoutes";
 
 const appRoutes = [
@@ -16,24 +18,7 @@ const appRoutes = [
       icon: <HomeIcon />,
     },
   },
-  {
-    state: "manage-patient",
-    path: "/patients",
-    sidebarProps: {
-      displayText: "Bệnh nhân",
-      icon: <AccessibleIcon />,
-    },
-    child: [
-      {
-        state: "view-patients",
-        path: "/patients",
-        sidebarProps: {
-          displayText: "Danh sách bệnh nhân",
-          icon: <AccessibleIcon />,
-        },
-      },
-    ],
-  },
+  patientRoutes,
   {
     state: "appointment",
     path: "/appointments",
@@ -112,6 +97,7 @@ const appRoutes = [
   },
   treatmentsRoutes,
   drugRoutes,
+  paymentRoutes,
 ];
 
 export default appRoutes;
