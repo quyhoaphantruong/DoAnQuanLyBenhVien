@@ -35,7 +35,7 @@ function CalendarEachStaff() {
           sx={{
             marginTop: 3,
             display: "flex",
-            gap: "30px",
+            gap: "20px",
           }}
         >
           <Paper sx={{ padding: 3 }}>
@@ -43,6 +43,9 @@ function CalendarEachStaff() {
           </Paper>
           <Paper sx={{ padding: 3 }}>
             Giờ kết thúc: {dayjs(lich.gioKetThuc).format("YYYY-MM-DD HH:mm:ss")}
+          </Paper>
+          <Paper sx={{ padding: 3 }}>
+            Địa chỉ phòng khám: {lich.diaChiPhongKham}
           </Paper>
         </Box>
       ))}

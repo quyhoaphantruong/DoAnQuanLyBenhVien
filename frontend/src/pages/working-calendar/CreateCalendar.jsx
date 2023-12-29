@@ -40,7 +40,6 @@ function CreateCalendar() {
         idNhanVien: calendar.idNhanVien,
         phongKham: calendar.phongKham,
         gioBatDau: processDateTime(calendar.gioBatDau),
-        gioKetThuc: processDateTime(calendar.gioKetThuc),
       };
 
       const res = await CalendarWorkingService.taoLichLamViec(

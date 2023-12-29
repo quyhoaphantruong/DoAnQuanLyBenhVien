@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class TaoChiTietDieuTriDTO {
-    private byte idRang;
+    private int idKeHoachDieuTri;
+    private int idDieuTri;
+    private int idRang;
     private String loaiMat;
-    private Integer idDieuTri;
-    private Integer idKeHoachDieuTri;
 }

@@ -63,11 +63,13 @@ public class AuthenticationService {
 
             if (!resultList.isEmpty()) {
                 Object[] result = resultList.get(0); // Assuming the first row contains NhanVien details
-                String ten = (String) result[0]; // Assuming the first column is TEN (name)
-                String soDienThoai = (String) result[1]; // Assuming the second column is SODIENTHOAI (phone number)
-                String loaiNhanVien = (String) result[2]; // Assuming the third column is LOAINHANVIEN (employee type)
+                Integer idNhanVien = (Integer) result[0];
+                String ten = (String) result[1]; // Assuming the first column is TEN (name)
+                String soDienThoai = (String) result[2]; // Assuming the second column is SODIENTHOAI (phone number)
+                String loaiNhanVien = (String) result[3]; // Assuming the third column is LOAINHANVIEN (employee type)
 
                 NhanVienDTO nhanVienDTO = new NhanVienDTO();
+                nhanVienDTO.setIdNhanVien(idNhanVien);
                 nhanVienDTO.setTen(ten);
                 nhanVienDTO.setSoDienThoai(soDienThoai);
                 nhanVienDTO.setLoaiNhanVien(loaiNhanVien);

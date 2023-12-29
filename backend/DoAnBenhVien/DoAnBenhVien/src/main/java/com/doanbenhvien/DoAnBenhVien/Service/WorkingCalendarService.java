@@ -24,17 +24,15 @@ public class WorkingCalendarService {
     private ErrorHandler errorHandler;
 
     public ResponseEntity<?> taoLichLamViec(LichLamViecDTO lichLamViecDTO) {
-        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("TAO_LICH_LAM_VIEC");
+        StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("TAO_LICHLAMVIEC");
 
         storedProcedureQuery.registerStoredProcedureParameter("ID_NHANVIEN", Integer.class, ParameterMode.IN);
         storedProcedureQuery.registerStoredProcedureParameter("ID_PHONGKHAM", Integer.class, ParameterMode.IN);
         storedProcedureQuery.registerStoredProcedureParameter("GIO_BATDAU", LocalDateTime.class, ParameterMode.IN);
-        storedProcedureQuery.registerStoredProcedureParameter("GIO_KETTHUC", LocalDateTime.class, ParameterMode.IN);
 
         storedProcedureQuery.setParameter("ID_NHANVIEN", lichLamViecDTO.getIdNhanVien());
         storedProcedureQuery.setParameter("ID_PHONGKHAM", lichLamViecDTO.getPhongKham());
         storedProcedureQuery.setParameter("GIO_BATDAU", lichLamViecDTO.getGioBatDau());
-        storedProcedureQuery.setParameter("GIO_KETTHUC", lichLamViecDTO.getGioKetThuc());
 
         try {
             storedProcedureQuery.execute();
@@ -60,7 +58,8 @@ public class WorkingCalendarService {
         for (Object[] obj : objects) {
             Timestamp gioBatDau = (Timestamp) obj[0];
             Timestamp gioKetThuc = (Timestamp) obj[1];
-            responses.add(new LichLamViecNhanVienResponse(gioBatDau, gioKetThuc));
+            String diaChiPhongKham = (String) obj[2];
+            responses.add(new LichLamViecNhanVienResponse(gioBatDau, gioKetThuc, diaChiPhongKham));
         }
         return ResponseEntity.ok(responses);
     }

@@ -24,6 +24,14 @@ const drugRoutes = {
         icon: <HomeIcon />,
       },
     },
+    {
+      state: "prescribe-drug",
+      path: "prescribe-drug",
+      sidebarProps: {
+        displayText: "Kê khai thuốc",
+        icon: <HomeIcon />,
+      },
+    },
   ],
 };
 

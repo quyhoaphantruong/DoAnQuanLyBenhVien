@@ -88,7 +88,7 @@ function CreateStaffPage() {
               onChange={handleChange}
             >
               <MenuItem value={"Quản trị viên"}>Quản trị viên</MenuItem>
-              <MenuItem value={"Nhân viên"}>Lễ tân</MenuItem>
+              <MenuItem value={"Lễ tân"}>Lễ tân</MenuItem>
               <MenuItem value={"Nha sĩ"}>Nha sĩ</MenuItem>
             </Select>
           ) : (
@@ -111,7 +111,13 @@ function CreateStaffPage() {
           )
         )}
       </Box>
-      <Button variant="contained" onClick={taoNhanVien}>
+      <Button
+        sx={{
+          marginTop: 3,
+        }}
+        variant="contained"
+        onClick={taoNhanVien}
+      >
         Tạo nhân viên
       </Button>
     </div>

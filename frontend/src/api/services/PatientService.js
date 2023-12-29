@@ -1,10 +1,9 @@
 import AxiosInstance from "../../configs/AxiosInstance";
 
 class PatientService {
-  taoNhanVien = async (nhanVienInfo) => {
+  dangKyBenhNhan = async (benhNhanInfo) => {
     try {
-      const response = await AxiosInstance.post("/personnel", nhanVienInfo);
-      console.log(nhanVienInfo);
+      const response = await AxiosInstance.post("/dang-ky", benhNhanInfo);
       return response;
     } catch (error) {
       return error;

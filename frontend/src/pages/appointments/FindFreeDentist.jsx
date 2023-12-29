@@ -8,8 +8,12 @@ import {
   ListItemText,
   TextField,
   Box,
+  ListItemButton,
 } from "@mui/material";
 import AppointmentService from "../../api/services/AppointmentService";
+import { useDispatch, useSelector } from "react-redux";
+import { setIdBenhNhan } from "../../redux/features/patientSlice";
+import { setDentistSelected } from "../../redux/features/dentistSlice";
 
 const style = {
   position: "absolute",
@@ -26,8 +30,10 @@ const style = {
 function FindFreeDentist() {
   const [openModal, setOpenModal] = useState(false);
   const [freeDentists, setFreeDentists] = useState([]);
-  const [idBenhNhan, setIdBenhNhan] = useState("");
   const [gioBatDau, setGioBatDau] = useState("");
+  const { idBenhNhan } = useSelector((state) => state.patient);
+
+  const dispatch = useDispatch();
 
   const handleFindFreeDentist = async () => {
     try {
@@ -53,9 +59,12 @@ function FindFreeDentist() {
   return (
     <div>
       <TextField
+        InputLabelProps={{
+          shrink: true,
+        }}
         label="ID Bệnh Nhân"
         value={idBenhNhan}
-        onChange={(e) => setIdBenhNhan(e.target.value)}
+        onChange={(e) => dispatch(setIdBenhNhan(e.target.value))}
         variant="outlined"
         fullWidth
         margin="normal"
@@ -81,10 +90,18 @@ function FindFreeDentist() {
           <List>
             {freeDentists?.map((dentist) => (
               <ListItem disablePadding key={dentist.idNhanVien}>
-                <ListItemText primary={`Tên: ${dentist.ten}`} />
-                <ListItemText
-                  secondary={`Đã khám: ${dentist.daKham ? "Rồi" : "Chưa"}`}
-                />
+                <ListItemButton
+                  disableGutters
+                  onClick={() => {
+                    handleCloseModal();
+                    dispatch(setDentistSelected(dentist));
+                  }}
+                >
+                  <ListItemText primary={`Tên: ${dentist.ten}`} />
+                  <ListItemText
+                    secondary={`Đã khám: ${dentist.daKham ? "Rồi" : "Chưa"}`}
+                  />
+                </ListItemButton>
               </ListItem>
             ))}
           </List>

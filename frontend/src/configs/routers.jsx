@@ -13,6 +13,14 @@ import CalendarStaffPage from "../pages/working-calendar/CalendarStaffPage";
 import CalendarEachStaff from "../pages/working-calendar/CalendarEachStaff";
 import ManageStaffPage from "../pages/staff/ManageStaffPage";
 import CreateTreatMentPage from "../pages/treatments/CreateTreatMentPage";
+import PaymentDebtPage from "../pages/payment/PaymentDebtPage";
+import PatientDebtPage from "../pages/payment/PatientDebtPage";
+import CompletePaymentDebtPage from "../pages/payment/CompletePaymentDebtPage";
+import CreatePatientPage from "../pages/patients/CreatePatientPage";
+import drugRouters from "../constants/routers/drugRouter";
+import ViewTreatmentsPage from "../pages/treatments/ViewTreatmentsPage";
+import treatmentRouter from "../constants/routers/treatmentRouter";
+import clinicsRouter from "../constants/routers/clincsRouter";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/patients",
         element: <PatientsPage />,
+      },
+      {
+        path: "/create-patient",
+        element: <CreatePatientPage />,
       },
       {
         path: "/appointments",
@@ -64,9 +76,20 @@ const router = createBrowserRouter([
         element: <CalendarEachStaff />,
       },
       {
-        path: "create-treatment",
-        element: <CreateTreatMentPage />,
+        path: "payment-debt",
+        element: <PaymentDebtPage />,
       },
+      {
+        path: "patient-debt/:patientId",
+        element: <PatientDebtPage />,
+      },
+      {
+        path: "complete-payment-debt/:debtId",
+        element: <CompletePaymentDebtPage />,
+      },
+      ...drugRouters,
+      ...treatmentRouter,
+      ...clinicsRouter,
     ],
   },
   {

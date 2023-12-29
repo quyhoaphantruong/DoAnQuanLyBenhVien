@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import PatientService from "../api/services/PatientService";
+import usePatientsHook from "../hooks/usePatientsHook";
 
 function createData(
   idNhanVien,
@@ -57,40 +58,38 @@ const style = {
 };
 
 export default function PatientsPage() {
-  const [dsNhanVienBanDau, setDsNhanVienBanDau] = useState([]);
-  const [dsBenhNhan, setDsBenhNhan] = useState([]);
-  const [locLoaiNhanVien, setLocLoaiNhanVien] = useState("All");
+  const { dsBenhNhan, dsNhanVienBanDau, locLoaiNhanVien } = usePatientsHook();
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  useEffect(() => {
-    const dsNhanVien = async () => {
-      try {
-        const res = await PatientService.xemDanhSachBenhNhan();
-        if (res?.status == 200) {
-          setDsBenhNhan(res.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    dsNhanVien();
-  }, []);
-  useEffect(() => {
-    if (locLoaiNhanVien === "All") {
-      setDsBenhNhan(dsNhanVienBanDau);
-      return;
-    }
-    const newDsNhanVien = [];
-    for (const nhanVien of dsNhanVienBanDau) {
-      if (nhanVien?.loaiNhanVien === locLoaiNhanVien)
-        newDsNhanVien.push(nhanVien);
-    }
-    setDsBenhNhan(newDsNhanVien);
-  }, [locLoaiNhanVien]);
+  // useEffect(() => {
+  //   const dsNhanVien = async () => {
+  //     try {
+  //       const res = await PatientService.xemDanhSachBenhNhan();
+  //       if (res?.status == 200) {
+  //         setDsBenhNhan(res.data);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   dsNhanVien();
+  // }, []);
+  // useEffect(() => {
+  //   if (locLoaiNhanVien === "All") {
+  //     setDsBenhNhan(dsNhanVienBanDau);
+  //     return;
+  //   }
+  //   const newDsNhanVien = [];
+  //   for (const nhanVien of dsNhanVienBanDau) {
+  //     if (nhanVien?.loaiNhanVien === locLoaiNhanVien)
+  //       newDsNhanVien.push(nhanVien);
+  //   }
+  //   setDsBenhNhan(newDsNhanVien);
+  // }, [locLoaiNhanVien]);
   return (
     <div>
       <TableContainer component={Paper}>

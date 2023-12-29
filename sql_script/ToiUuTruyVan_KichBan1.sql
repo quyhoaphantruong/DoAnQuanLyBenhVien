@@ -35,6 +35,8 @@ WHERE
 ORDER BY 
     t.name, ind.name, ic.index_column_id;
 
+EXEC DBO.XEM_INDEX_BANG 'LICHLAMVIEC'
+
 -- Use @GIO_KETTHUC directly in the query
 WITH DS_ID_NHASI AS (
 	SELECT ID_NHANVIEN

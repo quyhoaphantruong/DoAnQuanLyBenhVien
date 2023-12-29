@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -9,20 +9,44 @@ import {
   MenuItem,
 } from "@mui/material";
 import AppointmentService from "../../api/services/AppointmentService";
+import { useDispatch, useSelector } from "react-redux";
+import { setIdBenhNhan } from "../../redux/features/patientSlice";
 
 const AppointmentForm = () => {
+  const { idBenhNhan } = useSelector((state) => state.patient);
+  const { dentistSelected } = useSelector((state) => state.dentist);
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    idBenhNhan: 2,
-    idNhaSi: 1,
+    idBenhNhan,
+    idNhaSi: dentistSelected?.idNhanVien || "",
     idTroKham: null,
     idPhongKham: 1,
     thoiGian: "2023-12-15T09:30",
     ghiChu: "",
     tinhTrang: "Mới",
   });
+  useEffect(() => {
+    if (dentistSelected)
+      setFormData((prev) => ({
+        ...prev,
+        idNhaSi: dentistSelected.idNhanVien,
+      }));
+  }, [dentistSelected]);
+
+  useEffect(() => {
+    console.log("change appoint form", idBenhNhan);
+    setFormData((prev) => ({
+      ...prev,
+      idBenhNhan,
+    }));
+  }, [idBenhNhan]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "idBenhNhan") {
+      dispatch(setIdBenhNhan(value));
+      return;
+    }
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -43,11 +67,14 @@ const AppointmentForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} mt={3}>
         <Grid item xs={6}>
           <TextField
+            InputLabelProps={{
+              shrink: true,
+            }}
             fullWidth
-            label="ID Bệnh Nhân"
+            label="Id bệnh nhân"
             name="idBenhNhan"
             value={formData.idBenhNhan}
             onChange={handleChange}
@@ -58,7 +85,7 @@ const AppointmentForm = () => {
             fullWidth
             label="ID Nhà Sĩ"
             name="idNhaSi"
-            value={formData.idNhaSi}
+            value={formData?.idNhaSi}
             onChange={handleChange}
           />
         </Grid>
