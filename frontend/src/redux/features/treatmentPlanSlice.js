@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // selectedTooth: object Rang
 // selectedFacialType: object Mat
-const initialState = {
+export const initialState = {
   keHoachDieuTri: {
     idBenhNhan: null,
     chanDoan: "",
@@ -11,6 +11,7 @@ const initialState = {
   selectedTeethAndFacialTypes: [],
   selectedTooth: null,
   selectedFacialType: null,
+  selectedTreatment: null,
 };
 
 export const treatmentPlanSlice = createSlice({
@@ -30,6 +31,9 @@ export const treatmentPlanSlice = createSlice({
     setSelectedFacialType: (state, { payload }) => {
       state.selectedFacialType = payload;
     },
+    setSelectedTreatment: (state, { payload }) => {
+      state.selectedTreatment = payload;
+    },
     removeSelectedToothAndFacialtype: (state, { payload }) => {
       console.log("remove", payload);
       state.selectedTeethAndFacialTypes =
@@ -39,6 +43,7 @@ export const treatmentPlanSlice = createSlice({
           );
         });
     },
+    resetTreatmentPlan: () => initialState,
   },
 });
 
@@ -49,6 +54,8 @@ export const {
   setSelectedTooth,
   setSelectedFacialType,
   removeSelectedToothAndFacialtype,
+  setSelectedTreatment,
+  resetTreatmentPlan,
 } = treatmentPlanSlice.actions;
 
 export default treatmentPlanSlice.reducer;

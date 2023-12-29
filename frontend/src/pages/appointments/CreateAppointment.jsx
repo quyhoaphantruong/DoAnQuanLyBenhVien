@@ -3,8 +3,6 @@ import { useState } from "react";
 import AppointmentForm from "../../components/appointments/AppointmentForm";
 import FindFreeDentist from "./FindFreeDentist";
 
-const fields = [];
-
 function CreateAppointment() {
   const [cuocHen, setCuocHen] = useState({
     idNhanVien: "",

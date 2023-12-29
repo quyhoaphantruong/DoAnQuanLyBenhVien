@@ -10,9 +10,11 @@ import java.sql.Timestamp;
 public class LichLamViecNhanVienResponse {
     private Timestamp gioBatDau;
     private Timestamp gioKetThuc;
+    private String diaChiPhongKham;
 
-    public LichLamViecNhanVienResponse(Timestamp gioBatDau, Timestamp gioKetThuc) {
+    public LichLamViecNhanVienResponse(Timestamp gioBatDau, Timestamp gioKetThuc, String diaChiPhongKham) {
         this.gioBatDau = gioBatDau;
         this.gioKetThuc = gioKetThuc;
+        this.diaChiPhongKham = diaChiPhongKham;
     }
 }

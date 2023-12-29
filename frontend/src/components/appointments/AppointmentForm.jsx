@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -14,16 +14,32 @@ import { setIdBenhNhan } from "../../redux/features/patientSlice";
 
 const AppointmentForm = () => {
   const { idBenhNhan } = useSelector((state) => state.patient);
+  const { dentistSelected } = useSelector((state) => state.dentist);
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     idBenhNhan,
-    idNhaSi: 1,
+    idNhaSi: dentistSelected?.idNhanVien || "",
     idTroKham: null,
     idPhongKham: 1,
     thoiGian: "2023-12-15T09:30",
     ghiChu: "",
     tinhTrang: "Mới",
   });
+  useEffect(() => {
+    if (dentistSelected)
+      setFormData((prev) => ({
+        ...prev,
+        idNhaSi: dentistSelected.idNhanVien,
+      }));
+  }, [dentistSelected]);
+
+  useEffect(() => {
+    console.log("change appoint form", idBenhNhan);
+    setFormData((prev) => ({
+      ...prev,
+      idBenhNhan,
+    }));
+  }, [idBenhNhan]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,7 +76,7 @@ const AppointmentForm = () => {
             fullWidth
             label="Id bệnh nhân"
             name="idBenhNhan"
-            value={idBenhNhan}
+            value={formData.idBenhNhan}
             onChange={handleChange}
           />
         </Grid>
@@ -69,7 +85,7 @@ const AppointmentForm = () => {
             fullWidth
             label="ID Nhà Sĩ"
             name="idNhaSi"
-            value={formData.idNhaSi}
+            value={formData?.idNhaSi}
             onChange={handleChange}
           />
         </Grid>

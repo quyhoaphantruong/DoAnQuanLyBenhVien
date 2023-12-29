@@ -5,6 +5,11 @@ import colorConfigs from "../../configs/colorConfigs";
 
 const SidebarItem = ({ item }) => {
   const { appState } = useSelector((state) => state.appState);
+  const { user } = useSelector((state) => state.user);
+  const loaiNhanVien = user?.loaiNhanVien || null;
+  if (item?.roles && loaiNhanVien) {
+    if (!item.roles.includes(loaiNhanVien)) return null;
+  }
 
   return item?.sidebarProps && item.path ? (
     <ListItemButton

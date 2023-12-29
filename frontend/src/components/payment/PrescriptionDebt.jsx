@@ -62,7 +62,7 @@ const PrescriptionDebt = ({ prescriptionDebts }) => {
 
   return (
     <div>
-      {precriptionDebtsMockData.map((debt) => (
+      {prescriptionDebts?.map((debt) => (
         <Card key={debt.idThongTinThanhToan} sx={{ marginBottom: 5 }}>
           <CardContent
             sx={{

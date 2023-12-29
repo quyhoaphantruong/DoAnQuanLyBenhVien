@@ -1,5 +1,4 @@
 import HomeIcon from "@mui/icons-material/Home";
-import AccessibleIcon from "@mui/icons-material/Accessible";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ManIcon from "@mui/icons-material/Man";
@@ -7,6 +6,7 @@ import treatmentsRoutes from "./constantsForAppRoutes/treatmentsRoutes";
 import drugRoutes from "./constantsForAppRoutes/drugRoutes";
 import paymentRoutes from "./constantsForAppRoutes/paymentRoutes";
 import patientRoutes from "./constantsForAppRoutes/patientRoutes";
+import clinicRoutes from "./constantsForAppRoutes/clinicRoutes";
 // import drugRoutes from "./constantsForAppRoutes/drugRoutes";
 
 const appRoutes = [
@@ -47,6 +47,7 @@ const appRoutes = [
     child: [
       {
         path: "/create-staff",
+        roles: ["Quản trị viên"],
         sidebarProps: {
           displayText: "Tạo nhân viên",
           icon: <ManIcon />,
@@ -81,7 +82,7 @@ const appRoutes = [
         state: "create-calendar",
         path: "/create-calendar",
         sidebarProps: {
-          displayText: "Tạo lịch hẹn",
+          displayText: "Tạo lịch làm việc",
           icon: <CalendarMonthIcon />,
         },
       },
@@ -98,6 +99,7 @@ const appRoutes = [
   treatmentsRoutes,
   drugRoutes,
   paymentRoutes,
+  clinicRoutes,
 ];
 
 export default appRoutes;

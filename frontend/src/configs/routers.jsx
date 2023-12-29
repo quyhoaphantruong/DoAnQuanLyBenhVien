@@ -17,6 +17,10 @@ import PaymentDebtPage from "../pages/payment/PaymentDebtPage";
 import PatientDebtPage from "../pages/payment/PatientDebtPage";
 import CompletePaymentDebtPage from "../pages/payment/CompletePaymentDebtPage";
 import CreatePatientPage from "../pages/patients/CreatePatientPage";
+import drugRouters from "../constants/routers/drugRouter";
+import ViewTreatmentsPage from "../pages/treatments/ViewTreatmentsPage";
+import treatmentRouter from "../constants/routers/treatmentRouter";
+import clinicsRouter from "../constants/routers/clincsRouter";
 
 const router = createBrowserRouter([
   {
@@ -72,10 +76,6 @@ const router = createBrowserRouter([
         element: <CalendarEachStaff />,
       },
       {
-        path: "create-treatment",
-        element: <CreateTreatMentPage />,
-      },
-      {
         path: "payment-debt",
         element: <PaymentDebtPage />,
       },
@@ -87,6 +87,9 @@ const router = createBrowserRouter([
         path: "complete-payment-debt/:debtId",
         element: <CompletePaymentDebtPage />,
       },
+      ...drugRouters,
+      ...treatmentRouter,
+      ...clinicsRouter,
     ],
   },
   {

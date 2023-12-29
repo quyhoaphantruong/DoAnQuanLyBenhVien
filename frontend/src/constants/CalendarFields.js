@@ -10,11 +10,6 @@ export const calendarFields = [
     name: "gioBatDau",
   },
   {
-    label: "Giờ kết thúc",
-    type: "datetime",
-    name: "gioKetThuc",
-  },
-  {
     label: "Phòng khám",
     type: "text",
     name: "phongKham",

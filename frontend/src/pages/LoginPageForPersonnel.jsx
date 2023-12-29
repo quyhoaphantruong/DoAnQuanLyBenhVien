@@ -35,7 +35,7 @@ function LoginPageForPersonnel() {
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      alert(error?.response?.data?.error);
     }
   };
 

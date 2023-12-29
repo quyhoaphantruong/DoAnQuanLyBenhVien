@@ -19,14 +19,15 @@ import TreatmentService from "../../api/services/TreatmentService";
 import TeethAndFacialForm from "./TeethAndFacialForm";
 import SelectedTeethAndFacialTypes from "./SelectedTeethAndFacialTypes";
 
-const TeethAndFacialSelection = ({ selectedTreatment }) => {
+const TeethAndFacialSelection = () => {
   const [readyToAddToothAndFacialType, setReadyToAddToothAndFacialtype] =
     useState(false);
   const [selectedTeethIds, setSelectedTeethIds] = useState([]);
-  const [reviewOpen, setReviewOpen] = useState(false);
   const [teeth, setTeeth] = useState([]);
   const [facialTypes, setFacialTypes] = useState([]);
-  const { keHoachDieuTri } = useSelector((state) => state.treatmentPlan);
+  const { keHoachDieuTri, selectedTreatment } = useSelector(
+    (state) => state.treatmentPlan
+  );
 
   const { selectedTeethAndFacialTypes } = useSelector(
     (state) => state.treatmentPlan
@@ -47,38 +48,6 @@ const TeethAndFacialSelection = ({ selectedTreatment }) => {
     };
     getTeethAndFacialTypes();
   }, []);
-
-  const toggleReviewOpen = () => {
-    setReviewOpen((prev) => !prev);
-  };
-
-  const formatTeethAndFacialTypesToString = (teethAndFacialTypes) => {
-    let result = [];
-    teethAndFacialTypes.forEach((item) => {
-      result.push(`${item.tenRang}-${item.tenMat}`);
-    });
-    return result.join(", ");
-  };
-
-  const handleSubmit = async () => {
-    try {
-      const keHoachDieuTriRes = await TreatmentService.taoKeHoachDieuTri(
-        keHoachDieuTri
-      );
-      if (keHoachDieuTriRes?.status == 200) {
-        for (const selectedToothId of selectedTeethIds) {
-          const chiTietDieuTriRes = await TreatmentService.taoChiTietDieuTri({
-            idKeHoachDieuTri: keHoachDieuTriRes?.data,
-            idRang: selectedToothId,
-            idDieuTri: selectedTreatment.idDieuTri,
-            loaiMat: "",
-          });
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <Grid container spacing={2}>
@@ -104,38 +73,6 @@ const TeethAndFacialSelection = ({ selectedTreatment }) => {
         >
           Thêm răng và mặt
         </Button>
-      </Grid>
-      {/* Review information  */}
-      <Grid item xs={12}>
-        <Button variant="contained" color="primary" onClick={toggleReviewOpen}>
-          Xem lại thông tin
-        </Button>
-      </Grid>
-
-      <Grid item xs={12}>
-        <Paper
-          elevation={3}
-          style={{ padding: "20px", display: reviewOpen ? "block" : "none" }}
-        >
-          <Typography variant="h6">Xem lại thông tin</Typography>
-          <Typography variant="subtitle1">
-            Chẩn đoán: {keHoachDieuTri?.chanDoan}
-          </Typography>
-          <Typography variant="subtitle1">
-            Nội dung: {keHoachDieuTri?.noiDung}
-          </Typography>
-          <Typography variant="subtitle1">
-            Điều trị: {selectedTreatment?.tenDieuTri}
-          </Typography>
-          <Typography variant="subtitle1">
-            Danh sách răng và mặt chọn:{" "}
-            {formatTeethAndFacialTypesToString(selectedTeethAndFacialTypes)}
-          </Typography>
-
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
-            Tạo kế hoạch điều trị
-          </Button>
-        </Paper>
       </Grid>
     </Grid>
   );

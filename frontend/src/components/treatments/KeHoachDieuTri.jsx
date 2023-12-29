@@ -2,13 +2,17 @@ import { TextField, Grid, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setKeHoachDieuTri } from "../../redux/features/treatmentPlanSlice";
 
-const KeHoachDieuTri = ({ createKeHoachDieuTri }) => {
+const KeHoachDieuTri = () => {
   const { keHoachDieuTri } = useSelector((state) => state.treatmentPlan);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    dispatch(setKeHoachDieuTri({ ...keHoachDieuTri, [name]: value }));
+    const newKeHoachDieuTri = {
+      ...keHoachDieuTri,
+      [name]: value,
+    };
+    dispatch(setKeHoachDieuTri(newKeHoachDieuTri));
   };
 
   return (
@@ -19,21 +23,22 @@ const KeHoachDieuTri = ({ createKeHoachDieuTri }) => {
       <Grid item xs={6}>
         <TextField
           fullWidth
-          name="noiDung"
-          label="Nội dung"
-          value={keHoachDieuTri.noiDung}
-          onChange={handleChange}
-        />
-      </Grid>
-      <Grid item xs={6}>
-        <TextField
-          fullWidth
           name="chanDoan"
           label="Chẩn đoán"
           value={keHoachDieuTri.chanDoan}
           onChange={handleChange}
         />
       </Grid>
+      <Grid item xs={6}>
+        <TextField
+          fullWidth
+          name="noiDung"
+          label="Nội dung"
+          value={keHoachDieuTri.noiDung}
+          onChange={handleChange}
+        />
+      </Grid>
+
       <Grid item xs={6}>
         <TextField
           fullWidth

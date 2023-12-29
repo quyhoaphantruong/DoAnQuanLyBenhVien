@@ -3,6 +3,7 @@ package com.doanbenhvien.DoAnBenhVien.Controller;
 import com.doanbenhvien.DoAnBenhVien.DTO.DanhMucDieuTriDTO;
 import com.doanbenhvien.DoAnBenhVien.DTO.DieuTriDTO;
 import com.doanbenhvien.DoAnBenhVien.DTO.KeHoachDieuTriCuTheDTO;
+import com.doanbenhvien.DoAnBenhVien.DTO.KeHoachDieuTriDTO;
 import com.doanbenhvien.DoAnBenhVien.DTO.Request.CapNhatKeHoachDieuTriDTO;
 import com.doanbenhvien.DoAnBenhVien.DTO.Request.TaoChiTietDieuTriDTO;
 import com.doanbenhvien.DoAnBenhVien.DTO.Request.TaoKeHoachDieuTriRequest;
@@ -24,7 +25,7 @@ public class TreatmentController {
     @Autowired
     private TreatmentDataService treatmentDataService;
 
-    @GetMapping("/treatment/{idKeHoachDieuTri}")
+    @GetMapping("/treatment-details/{idKeHoachDieuTri}")
     public ResponseEntity<List<KeHoachDieuTriCuTheDTO>> xemKeHoachDieuTriCuThe(@PathVariable(name = "idKeHoachDieuTri") Integer idKeHoachDieuTri) {
         return treatmentService.xemKeHoachDieuTriCuThe(idKeHoachDieuTri);
     }
@@ -38,9 +39,10 @@ public class TreatmentController {
         return treatmentService.capNhatKehoachDieuTri(capNhatKeHoachDieuTriDTO);
     }
     @PostMapping("/treatment-details")
-    public ResponseEntity<?>  themChiTietDieuTri(@RequestBody TaoChiTietDieuTriDTO taoChiTietDieuTriDTO) {
-        return treatmentService.themChiTietDieuTri(taoChiTietDieuTriDTO);
+    public ResponseEntity<?> themChiTietDieuTri(@RequestBody List<TaoChiTietDieuTriDTO> taoChiTietDieuTriDTOS) {
+        return treatmentService.themChitietDieutri(taoChiTietDieuTriDTOS);
     }
+
     @GetMapping("/category-treatments")
     public ResponseEntity<List<DanhMucDieuTriDTO>> xemDanhMucDieuTri() {
         return treatmentDataService.xemDanhMucDieuTri();
@@ -48,5 +50,9 @@ public class TreatmentController {
     @GetMapping("/treatment-services/{id}")
     public ResponseEntity<List<DieuTriDTO>> xemDanhSachDieuTri(@PathVariable(name = "id") Integer idDanhMucDieuTri) {
         return treatmentDataService.xemDanhSachDieuTri(idDanhMucDieuTri);
+    }
+    @GetMapping("/patient/{id}")
+    public ResponseEntity<List<KeHoachDieuTriDTO>> xemDanhSachKeHoachDieuTri(@PathVariable(name="id") Integer idBenhNhan) {
+        return treatmentService.xemDsKeHoachDieuTri(idBenhNhan);
     }
 }

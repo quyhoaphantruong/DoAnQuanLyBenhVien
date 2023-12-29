@@ -11,11 +11,14 @@ import { mockTreatments } from "../../constants/TreatmentMockData";
 import TeethAndFacialSelection from "./TeethAndFacialSelection";
 import TreatmentDataService from "../../api/services/TreatmentDataService";
 import { formatToVND } from "../../utilities/formatPrice";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedTreatment } from "../../redux/features/treatmentPlanSlice";
+import ReviewInformation from "./ReviewInformation";
 
 const TreatmentsComponent = () => {
+  const { selectedTreatment } = useSelector((state) => state.treatmentPlan);
+  const dispatch = useDispatch();
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedTreatment, setSelectedTreatment] = useState(true);
   const [treatments, setTreatments] = useState([]);
   const [loadingCategories, setLoadingCategories] = useState(false);
   const [loadingTreatments, setLoadingTreatments] = useState(false);
@@ -25,9 +28,9 @@ const TreatmentsComponent = () => {
       setLoadingCategories(true);
       try {
         const response = await TreatmentDataService.xemDanhSachDanhMucDieuTri();
-
-        console.log(response);
-        setCategories(response.data);
+        if (response?.status == 200) {
+          setCategories(response.data);
+        }
       } catch (error) {
         console.error("Ko lấy đươc danh mục:", error);
       } finally {
@@ -38,13 +41,11 @@ const TreatmentsComponent = () => {
   }, []);
 
   const handleCategoryClick = async (categoryId) => {
-    setSelectedCategory(categoryId);
     setLoadingTreatments(true);
-    setTreatments(mockTreatments[selectedCategory]);
 
     try {
       const response = await TreatmentDataService.xemDanhSachDieuTri(
-        selectedCategory
+        categoryId
       );
       console.log(response);
       if (response?.status == 200) setTreatments(response.data);
@@ -56,7 +57,7 @@ const TreatmentsComponent = () => {
   };
 
   const handleTreatmentClick = (treatment) => {
-    setSelectedTreatment(treatment);
+    dispatch(setSelectedTreatment(treatment));
   };
 
   return (
@@ -97,9 +98,9 @@ const TreatmentsComponent = () => {
           </List>
         </div>
       </div>
-      {selectedTreatment && (
-        <TeethAndFacialSelection selectedTreatment={selectedTreatment} />
-      )}
+      {selectedTreatment && <TeethAndFacialSelection />}
+      {/* Review information */}
+      <ReviewInformation />
     </>
   );
 };

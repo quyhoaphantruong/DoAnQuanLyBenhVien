@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, Typography, Button } from "@mui/material";
 import { formatToVND } from "../../utilities/formatPrice";
 import { useNavigate } from "react-router-dom";
+import PaymentService from "../../api/services/PaymentService";
 
 const treatmentDebtsMockData = [
   {
@@ -87,8 +88,8 @@ const treatmentDebtsMockData = [
   },
 ];
 
-const TreatmentsDebt = () => {
-  const [debtData, setDebtData] = useState(treatmentDebtsMockData);
+const TreatmentsDebt = ({ debtData }) => {
+  // const [debtData, setDebtData] = useState(treatmentDebtsMockData);
   const navigate = useNavigate();
   const handlePayDebt = (debt) => {
     navigate(`/complete-payment-debt/${debt.idThongTinThanhToan}`, {
@@ -101,7 +102,7 @@ const TreatmentsDebt = () => {
 
   return (
     <div>
-      {debtData.map((debt) => (
+      {debtData?.map((debt) => (
         <Card sx={{ marginBottom: 5 }} key={debt.idThongTinThanhToan}>
           <CardContent
             sx={{
