@@ -166,6 +166,7 @@ VALUES   (1, N'Dịch vụ chăm sóc tổng thể', 80),
 INSERT INTO THUOC(TEN_THUOC, PHI)
 VALUES ('THUOC 1', 10),
 		('THUOC 2', 20),
+<<<<<<< HEAD
 		('THUOC 3', 200),
 		('THUOC 4', 100),
 		('THUOC 5', 500)
@@ -237,3 +238,6 @@ EXEC TAO_THONGTIN_THANHTOAN_DONTHUOC 0, 30000, 5
 
 
 
+=======
+		('THUOC 3', 30)
+>>>>>>> 4f5d431f10212c6e0c374b66c2a69319645305f6

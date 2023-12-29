@@ -10,7 +10,8 @@ import PersonnelService from "../../api/services/PersonnelService";
 import { Button, MenuItem, Select } from "@mui/material";
 import { nhanVienRoles } from "../../constants/StaffRoles";
 import { useDispatch } from "react-redux";
-import { setDsBachNhan } from "../../redux/features/staffSlice";
+import { setDsNhanVien } from "../../redux/features/staffSlice";
+import useStaffHook from "../../hooks/useStaffHook";
 
 function createData(
   idNhanVien,
@@ -32,47 +33,8 @@ function createData(
   };
 }
 
-const rows = [
-  createData("NV001", "QUYHOA", "28-01-2003", "Q8", "123", "@MGIAL", "Nha sĩ"),
-  createData("NV001", "QUYHOA", "28-01-2003", "Q8", "123", "@MGIAL", "Nha sĩ"),
-  createData("NV001", "QUYHOA", "28-01-2003", "Q8", "123", "@MGIAL", "Nha sĩ"),
-  createData("NV001", "QUYHOA", "28-01-2003", "Q8", "123", "@MGIAL", "Nha sĩ"),
-];
-
 export default function StaffViewPage() {
-  const [dsNhanVienBanDau, setDsNhanVienBanDau] = useState([]);
-  const [dsNhanVien, setDsNhanVien] = useState([]);
-  const [locLoaiNhanVien, setLocLoaiNhanVien] = useState("All");
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const dsNhanVien = async () => {
-      try {
-        const res = await PersonnelService.xemDanhSachNhanVien();
-        console.log(res.data);
-        if (res?.status == 200) {
-          dispatch(setDsBachNhan(res.data));
-          setDsNhanVienBanDau(res.data);
-          setDsNhanVien(res.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    dsNhanVien();
-  }, []);
-  useEffect(() => {
-    if (locLoaiNhanVien === "All") {
-      setDsNhanVien(dsNhanVienBanDau);
-      return;
-    }
-    const newDsNhanVien = [];
-    for (const nhanVien of dsNhanVienBanDau) {
-      if (nhanVien?.loaiNhanVien === locLoaiNhanVien)
-        newDsNhanVien.push(nhanVien);
-    }
-    setDsNhanVien(newDsNhanVien);
-  }, [locLoaiNhanVien]);
+  const { dsNhanVien, locLoaiNhanVien, setLocLoaiNhanVien } = useStaffHook();
   return (
     <div>
       <Select

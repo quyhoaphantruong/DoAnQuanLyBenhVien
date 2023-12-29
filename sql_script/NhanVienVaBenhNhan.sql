@@ -33,7 +33,7 @@ GO
 EXEC DANG_KY '1235', '123', 'LE THI A', 'Nam', 'a@gmail.com'
 GO
 
--- đang nhập cho nhân viên
+-- đăng nhập cho nhân viên
 CREATE OR ALTER PROCEDURE DANG_NHAP_NHANVIEN
 	@SODIENTHOAI CHAR(10),
 	@MATKHAU CHAR(20)

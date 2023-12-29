@@ -1,4 +1,5 @@
 import { Card, CardContent, Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 const precriptionDebtsMockData = [
   {
     idThongTinThanhToan: 24888,
@@ -56,8 +57,14 @@ const precriptionDebtsMockData = [
   },
 ];
 const PrescriptionDebt = ({ prescriptionDebts }) => {
-  const handlePayDebt = (idThongTinThanhToan) => {
+  const navigate = useNavigate();
+  const handlePayDebt = (idThongTinThanhToan, tongTienThanhToan) => {
     console.log("pay the debt", idThongTinThanhToan);
+    navigate(`/complete-payment-debt-prescription/${idThongTinThanhToan}`, {
+      state: {
+        tongTienThanhToan,
+      },
+    });
   };
 
   return (
@@ -88,7 +95,9 @@ const PrescriptionDebt = ({ prescriptionDebts }) => {
             variant="contained"
             color="primary"
             sx={{ margin: "auto", marginTop: 3 }}
-            onClick={() => handlePayDebt(debt.idThongTinThanhToan)}
+            onClick={() =>
+              handlePayDebt(debt.idThongTinThanhToan, debt.tongTienThanhToan)
+            }
           >
             Thanh toán
           </Button>

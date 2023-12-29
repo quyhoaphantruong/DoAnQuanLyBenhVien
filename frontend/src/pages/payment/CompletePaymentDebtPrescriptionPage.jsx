@@ -13,9 +13,10 @@ import {
 } from "@mui/material";
 import PaymentService from "../../api/services/PaymentService"; // Assuming your payment service
 
-function CompletePaymentDebtPage() {
+function CompletePaymentDebtPrescriptionPage() {
   const { debtId } = useParams();
   const { state } = useLocation();
+  const [debtDetails, setDebtDetails] = useState({});
   const [tongTien, setTongTien] = useState(state.tongTienThanhToan);
   const [tienTra, setTienTra] = useState("");
   const [tienThoi, setTienThoi] = useState("");
@@ -45,7 +46,7 @@ function CompletePaymentDebtPage() {
       ghiChu,
     };
     try {
-      const response = await PaymentService.thanhToanKeHoachDieuTri(payload);
+      const response = await PaymentService.thanhToanDonThuoc(payload);
       console.log("Payment response:", response);
       if (response?.status == 200) {
         alert(response.data);
@@ -63,6 +64,24 @@ function CompletePaymentDebtPage() {
     <Card>
       <CardContent>
         {error && <Typography color="error">{error}</Typography>}
+        {/* Display debt details if available */}
+        {debtDetails.id && (
+          <>
+            <Typography variant="h5" component="h2">
+              Thông tin thanh toán
+            </Typography>
+            <Typography variant="body2">
+              Id thông tin thanh toán: {debtDetails.id}
+            </Typography>
+            <Typography variant="body2">
+              Tổng tiền cần thanh toán: {debtDetails.tongTienThanhToan}
+            </Typography>
+            <Typography variant="body2">
+              Type: {debtDetails.loaiThanhToan}
+            </Typography>
+          </>
+        )}
+
         {/* Payment form */}
         <Stack spacing={3}>
           <FormControl fullWidth>
@@ -142,4 +161,4 @@ function CompletePaymentDebtPage() {
   );
 }
 
-export default CompletePaymentDebtPage;
+export default CompletePaymentDebtPrescriptionPage;

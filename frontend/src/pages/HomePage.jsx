@@ -25,7 +25,7 @@ function HomePage() {
   const titleStyle = {
     fontWeight: "bold",
     fontSize: "24px",
-    marginTop: "10px", 
+    marginTop: "10px",
     marginLeft: "130px",
   };
 
@@ -37,13 +37,13 @@ function HomePage() {
   const informationStyle1 = {
     fontWeight: "bold",
     fontSize: "18px",
-    marginTop: "40px", 
+    marginTop: "40px",
     marginLeft: "130px",
   };
 
   const informationStyle2 = {
     fontSize: "16px",
-    marginTop: "30px", 
+    marginTop: "30px",
     marginLeft: "140px",
   };
 
@@ -58,8 +58,12 @@ function HomePage() {
         <div style={titleContentStyle}>
           <div style={titleStyle}>Phòng khám nha khoa</div>
           <div style={informationStyle1}>Giờ làm việc:</div>
-          <div style={informationStyle2}>* Thứ 2 đến Thứ 7: 8 giờ - 21 giờ </div>
-          <div style={informationStyle2}>* Chủ nhật và các ngày lễ: 8 giờ - 13 giờ </div>
+          <div style={informationStyle2}>
+            * Thứ 2 đến Thứ 7: 8 giờ - 21 giờ{" "}
+          </div>
+          <div style={informationStyle2}>
+            * Chủ nhật và các ngày lễ: 8 giờ - 13 giờ{" "}
+          </div>
           <div style={informationStyle1}>Chi nhánh:</div>
           <div style={informationStyle2}>1. Tân Bình: 0934567895</div>
           <div style={informationStyle2}>2. Bình Tân: 0854365896</div>

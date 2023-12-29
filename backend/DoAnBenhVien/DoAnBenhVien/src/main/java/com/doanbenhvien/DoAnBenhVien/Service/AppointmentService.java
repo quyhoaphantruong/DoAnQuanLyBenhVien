@@ -1,6 +1,7 @@
 package com.doanbenhvien.DoAnBenhVien.Service;
 
 import com.doanbenhvien.DoAnBenhVien.DTO.CuocHenDTO;
+import com.doanbenhvien.DoAnBenhVien.DTO.CuocHenNhaSiDTO;
 import com.doanbenhvien.DoAnBenhVien.DTO.NhaSiRanhDTO;
 import com.doanbenhvien.DoAnBenhVien.DTO.Request.TaoCuocHenRequest;
 import com.doanbenhvien.DoAnBenhVien.DTO.Request.TimNhaSiRanhRequest;
@@ -9,6 +10,7 @@ import jakarta.persistence.*;
 import org.apache.catalina.Store;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ssl.PemSslBundleProperties;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -55,7 +57,6 @@ public class AppointmentService {
         StoredProcedureQuery procedureQuery = entityManager.createStoredProcedureQuery("TAO_CUOCHEN");
         procedureQuery.registerStoredProcedureParameter("ID_BENHNHAN", String.class, ParameterMode.IN);
         procedureQuery.registerStoredProcedureParameter("ID_NHASI", String.class, ParameterMode.IN);
-        procedureQuery.registerStoredProcedureParameter("ID_TROKHAM", String.class, ParameterMode.IN);
         procedureQuery.registerStoredProcedureParameter("ID_PHONGKHAM", String.class, ParameterMode.IN);
         procedureQuery.registerStoredProcedureParameter("THOIGIAN", LocalDateTime.class, ParameterMode.IN);
         procedureQuery.registerStoredProcedureParameter("GHICHU", String.class, ParameterMode.IN);
@@ -63,7 +64,6 @@ public class AppointmentService {
 
         procedureQuery.setParameter("ID_BENHNHAN", taoCuocHenRequest.getIdBenhNhan());
         procedureQuery.setParameter("ID_NHASI", taoCuocHenRequest.getIdNhaSi());
-        procedureQuery.setParameter("ID_TROKHAM", taoCuocHenRequest.getIdTroKham());
         procedureQuery.setParameter("ID_PHONGKHAM", taoCuocHenRequest.getIdPhongKham());
         procedureQuery.setParameter("THOIGIAN", taoCuocHenRequest.getThoiGian());
         procedureQuery.setParameter("GHICHU", taoCuocHenRequest.getGhiChu());
@@ -137,6 +137,30 @@ public class AppointmentService {
             return ResponseEntity.ok("Xoá cuộc hẹn thành công");
         } catch(Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public ResponseEntity<?> xemCuocHenNhaSi(Integer idNhaSi) {
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("CUOCHEN_NHASI");
+        query.registerStoredProcedureParameter("ID_NHASI", Integer.class, ParameterMode.IN);
+        query.setParameter("ID_NHASI", idNhaSi);
+        try {
+            query.execute();
+            List<Object[]> objects = query.getResultList();
+            List<CuocHenNhaSiDTO> cuocHenNhaSiDTOS = new ArrayList<>();
+            for (Object[] obj : objects) {
+                CuocHenNhaSiDTO cuocHenNhaSiDTO = new CuocHenNhaSiDTO();
+                cuocHenNhaSiDTO.setIdCuocHen((Integer) obj[0]);
+                cuocHenNhaSiDTO.setIdPhongKham((Byte) obj[1]);
+                cuocHenNhaSiDTO.setIdBenhNhan((Integer) obj[2]);
+                cuocHenNhaSiDTO.setTinhTrang((String) obj[3]);
+                cuocHenNhaSiDTO.setGhiChu((String) obj[4]);
+                cuocHenNhaSiDTO.setThoiGian((Timestamp) obj[5]);
+                cuocHenNhaSiDTOS.add(cuocHenNhaSiDTO);
+            }
+            return ResponseEntity.ok(cuocHenNhaSiDTOS);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 }

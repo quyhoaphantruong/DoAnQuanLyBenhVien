@@ -20,7 +20,7 @@ const patientRoutes = {
       state: "create-patient",
       path: "/create-patient",
       sidebarProps: {
-        displayText: "Tạo bênh nhân",
+        displayText: "Tạo bệnh nhân",
         icon: <HomeIcon />,
       },
     },

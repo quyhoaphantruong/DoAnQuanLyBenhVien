@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -33,13 +33,7 @@ function PrescribeDrugPage() {
         value={prescription.bacSiDieuTri}
         onChange={handleChange}
       />
-      <TextField
-        fullWidth
-        name="ghiChu"
-        label="Ghi chú"
-        value={prescription.ghiChu}
-        onChange={handleChange}
-      />
+
       <Grid
         item
         xs={6}
@@ -66,6 +60,22 @@ function PrescribeDrugPage() {
           onChange={handleChange}
         />
       </Grid>
+      <TextField
+        sx={{ mt: 3 }}
+        fullWidth
+        name="ghiChu"
+        label="Ghi chú"
+        value={prescription.ghiChu}
+        onChange={handleChange}
+      />
+      <Button
+        sx={{
+          mt: 3,
+        }}
+        variant="contained"
+      >
+        Thêm đơn thuốc
+      </Button>
     </Grid>
   );
 }
