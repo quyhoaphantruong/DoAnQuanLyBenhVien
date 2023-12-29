@@ -11,10 +11,27 @@ BEGIN
     DECLARE @SODIENTHOAI CHAR(10) = '1234567' + CAST(@counter AS NVARCHAR(1));
     DECLARE @LOAINHANVIEN NVARCHAR(13) = N'Nha sĩ';
 
-	--TẠO NHÂN VIÊN
+	--TẠO nha sĩ
     EXEC TAO_NHANVIEN @TEN, @NGAYSINH, @DIACHI, @EMAIL, @SODIENTHOAI, @LOAINHANVIEN;
     SET @counter = @counter + 1;
 END;
+
+--tạo lễ tân
+DECLARE @counter INT = 1;
+WHILE @counter <= 5
+BEGIN
+    DECLARE @TEN NVARCHAR(50) = 'NhanVien ' + CAST(@counter AS NVARCHAR(2));
+    DECLARE @NGAYSINH DATE = DATEADD(YEAR, -30, GETDATE());
+    DECLARE @DIACHI NVARCHAR(50) = 'Address ' + CAST(@counter AS NVARCHAR(2));
+    DECLARE @EMAIL VARCHAR(30) = 'email' + CAST(@counter AS NVARCHAR(2)) + '@example.com';
+    DECLARE @SODIENTHOAI CHAR(10) = '0234567' + CAST(@counter AS NVARCHAR(1));
+    DECLARE @LOAINHANVIEN NVARCHAR(13) = N'Lễ tân';
+
+    EXEC TAO_NHANVIEN @TEN, @NGAYSINH, @DIACHI, @EMAIL, @SODIENTHOAI, @LOAINHANVIEN;
+    SET @counter = @counter + 1;
+END;
+--tạo admin
+ EXEC TAO_NHANVIEN 'Admin', '01/01/1998', N'Nguyễn Tri Phương', 'admin1998@email.com', '0111222333', N'Quản trị viên'
 
 SELECT * FROM NHANVIEN
 -- TẠO LỊCH LÀM VIỆC 
