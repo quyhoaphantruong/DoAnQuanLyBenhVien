@@ -33,4 +33,8 @@ public class AppointmentController {
     public ResponseEntity<?> xoaCuocHen(@PathVariable(value = "appointmentId") Integer idCuocHen) {
         return appointmentService.xoaCuocHen(idCuocHen);
     }
+    @GetMapping("/dentist/{id}")
+    public ResponseEntity<?> xemCuocHenNhaSi(@PathVariable(value = "id") Integer idNhaSi) {
+        return appointmentService.xemCuocHenNhaSi(idNhaSi);
+    }
 }

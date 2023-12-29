@@ -9,14 +9,6 @@ const drugRoutes = {
   },
   child: [
     {
-      state: "create-drug",
-      path: "create-drug",
-      sidebarProps: {
-        displayText: "Thêm thuốc",
-        icon: <HomeIcon />,
-      },
-    },
-    {
       state: "manage-drug",
       path: "manage-drug",
       sidebarProps: {

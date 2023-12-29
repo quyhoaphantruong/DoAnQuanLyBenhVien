@@ -21,6 +21,9 @@ import drugRouters from "../constants/routers/drugRouter";
 import ViewTreatmentsPage from "../pages/treatments/ViewTreatmentsPage";
 import treatmentRouter from "../constants/routers/treatmentRouter";
 import clinicsRouter from "../constants/routers/clincsRouter";
+import CompletePaymentDebtPrescriptionPage from "../pages/payment/CompletePaymentDebtPrescriptionPage";
+import ViewAppointsment from "../pages/appointments/ViewAppointsment";
+import ViewDentistAppointments from "../pages/appointments/ViewDentistAppointments";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +49,14 @@ const router = createBrowserRouter([
       {
         path: "/create-appointment",
         element: <CreateAppointment />,
+      },
+      {
+        path: "/view-appointments",
+        element: <ViewAppointsment />,
+      },
+      {
+        path: "/appointments/dentist/:idNhaSi",
+        element: <ViewDentistAppointments />,
       },
       {
         path: "/staff",
@@ -86,6 +97,10 @@ const router = createBrowserRouter([
       {
         path: "complete-payment-debt/:debtId",
         element: <CompletePaymentDebtPage />,
+      },
+      {
+        path: "complete-payment-debt-prescription/:debtId",
+        element: <CompletePaymentDebtPrescriptionPage />,
       },
       ...drugRouters,
       ...treatmentRouter,

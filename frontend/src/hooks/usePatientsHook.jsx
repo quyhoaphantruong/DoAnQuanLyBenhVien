@@ -3,40 +3,40 @@ import PatientService from "../api/services/PatientService";
 import { useState } from "react";
 
 function usePatientsHook() {
-  const [dsNhanVienBanDau, setDsNhanVienBanDau] = useState([]);
+  const [dsBenhNhanBanDau, setDsBenhNhanBanDau] = useState([]);
   const [dsBenhNhan, setDsBenhNhan] = useState([]);
-  const [locLoaiNhanVien, setLocLoaiNhanVien] = useState("All");
+  const [sdt, setSdt] = useState("");
   useEffect(() => {
-    const dsNhanVien = async () => {
+    const dsBenhNhan = async () => {
       try {
         const res = await PatientService.xemDanhSachBenhNhan();
         if (res?.status == 200) {
+          setDsBenhNhanBanDau(res.data);
           setDsBenhNhan(res.data);
         }
       } catch (error) {
         console.log(error);
       }
     };
-    dsNhanVien();
+    dsBenhNhan();
   }, []);
 
   useEffect(() => {
-    if (locLoaiNhanVien === "All") {
-      setDsBenhNhan(dsNhanVienBanDau);
-      return;
+    if (sdt.trim() !== "") {
+      let newDsBenhNhan = [];
+      for (const benhNhan of dsBenhNhanBanDau) {
+        if (benhNhan.soDienThoai.startsWith(sdt)) {
+          newDsBenhNhan.push(benhNhan);
+        }
+      }
+      setDsBenhNhan(newDsBenhNhan);
     }
-    const newDsNhanVien = [];
-    for (const nhanVien of dsNhanVienBanDau) {
-      if (nhanVien?.loaiNhanVien === locLoaiNhanVien)
-        newDsNhanVien.push(nhanVien);
-    }
-    setDsBenhNhan(newDsNhanVien);
-  }, [locLoaiNhanVien]);
+  }, [sdt]);
   return {
-    dsNhanVienBanDau,
+    dsBenhNhanBanDau,
     dsBenhNhan,
-    locLoaiNhanVien,
-    setLocLoaiNhanVien,
+    sdt,
+    setSdt,
   };
 }
 

@@ -12,6 +12,7 @@ import {
   MenuItem,
   Modal,
   Select,
+  TextField,
   Typography,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
@@ -58,7 +59,7 @@ const style = {
 };
 
 export default function PatientsPage() {
-  const { dsBenhNhan, dsNhanVienBanDau, locLoaiNhanVien } = usePatientsHook();
+  const { dsBenhNhan, sdt, setSdt } = usePatientsHook();
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -92,14 +93,21 @@ export default function PatientsPage() {
   // }, [locLoaiNhanVien]);
   return (
     <div>
+      <TextField
+        label="Tìm bằng số điện thoại"
+        variant="outlined"
+        value={sdt}
+        onChange={(e) => setSdt(e.target.value)}
+      />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
+              <TableCell>Id bệnh nhân</TableCell>
               <TableCell align="left">Tên</TableCell>
               <TableCell align="left">Số điện thoại</TableCell>
               <TableCell align="left">Email</TableCell>
-              <TableCell align="left">Xem thêm</TableCell>
+              {/* <TableCell align="left">Xem thêm</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -108,12 +116,13 @@ export default function PatientsPage() {
                 key={row.idNhanVien}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
+                <TableCell align="left">{row?.idBenhNhan}</TableCell>
                 <TableCell align="left">{row?.ten}</TableCell>
                 <TableCell align="left">{row?.soDienThoai}</TableCell>
                 <TableCell align="left">{row?.email}</TableCell>
-                <TableCell align="left">
+                {/* <TableCell align="left">
                   <Button onClick={handleOpen}>Xem thêm</Button>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>

@@ -35,8 +35,17 @@ const appRoutes = [
           icon: <LocalPhoneIcon />,
         },
       },
+      {
+        state: "view-appointments",
+        path: "/view-appointments",
+        sidebarProps: {
+          displayText: "Xem cuộc hẹn",
+          icon: <LocalPhoneIcon />,
+        },
+      },
     ],
   },
+  // staff
   {
     state: "staff",
     path: "/staff",
@@ -61,15 +70,9 @@ const appRoutes = [
           icon: <ManIcon />,
         },
       },
-      {
-        path: "/manage-staff",
-        sidebarProps: {
-          displayText: "Quản lý nhân viên",
-          icon: <ManIcon />,
-        },
-      },
     ],
   },
+  // working calendars
   {
     state: "working-calendars",
     path: "/working-calendars",

@@ -147,4 +147,5 @@ VALUES   (1, N'Dịch vụ chăm sóc tổng thể', 80),
 -- TẠO THUỐC
 INSERT INTO THUOC(TEN_THUOC, PHI)
 VALUES ('THUOC 1', 10),
-		('THUOC 2', 20)
+		('THUOC 2', 20),
+		('THUOC 3', 30)

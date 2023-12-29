@@ -1,16 +1,15 @@
 package com.doanbenhvien.DoAnBenhVien.Service;
 
+import com.doanbenhvien.DoAnBenhVien.DTO.*;
 import com.doanbenhvien.DoAnBenhVien.DTO.Request.TaoThanhToanDTO;
-import com.doanbenhvien.DoAnBenhVien.DTO.ThanhToanChuaTraDTO;
-import com.doanbenhvien.DoAnBenhVien.DTO.ThanhToanDieuTriChuaTraDTO;
-import com.doanbenhvien.DoAnBenhVien.DTO.ThanhToanDonThuocChuaTraDTO;
-import com.doanbenhvien.DoAnBenhVien.DTO.XemThanhToanChuaTraDTO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.StoredProcedureQuery;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -22,6 +21,13 @@ import java.util.List;
 public class PaymentService {
     @Autowired
     private EntityManager entityManager;
+
+    private final JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public PaymentService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
 //    public ResponseEntity<List<ThanhToanChuaTraDTO>> xemThongTinThanhToan(int patientId) {
 //        StoredProcedureQuery procedureQuery = entityManager.createStoredProcedureQuery("XEM_DS_THANHTOAN");
@@ -74,6 +80,7 @@ public class PaymentService {
         }
     }
 
+
     public ResponseEntity<?> xemThanhToanChuaTra(int idBenhNhan) {
         StoredProcedureQuery procedureQuery = entityManager.createStoredProcedureQuery("XEM_THANHTOAN_CHUATRA");
         procedureQuery.registerStoredProcedureParameter("ID_BENHNHAN", Integer.class, ParameterMode.IN);
@@ -116,4 +123,64 @@ public class PaymentService {
         return ResponseEntity.ok(resultDTO);
     }
 
+    public ResponseEntity<?> thanhToanDieuTri(ThongTinThanhToanDieuTriDTO thongTinThanhToanDieuTriDTO) {
+        System.out.println(thongTinThanhToanDieuTriDTO);
+        try {
+            jdbcTemplate.update(
+                    "EXEC THANHTOAN_KEHOACH_DIEUTRI ?, ?, ?, ?, ?, ?",
+                    thongTinThanhToanDieuTriDTO.getIdThongTinThanhToan(),
+                    thongTinThanhToanDieuTriDTO.getTienDaTra(),
+                    thongTinThanhToanDieuTriDTO.getTienThoi(),
+                    thongTinThanhToanDieuTriDTO.getTongTienThanhToan(),
+                    thongTinThanhToanDieuTriDTO.getLoaiThanhToan(),
+                    thongTinThanhToanDieuTriDTO.getGhiChu()
+            );
+            return ResponseEntity.ok("Thanh toán thành công");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            ResponseEntity.internalServerError().body(ex.getMessage());
+        }
+        return ResponseEntity.internalServerError().body("Lỗi hệ thống");
+    }
+
+    public ResponseEntity<?> thanhToanDonThuoc(ThongTinThanhToanDieuTriDTO thongTinThanhToanDieuTriDTO) {
+        System.out.println(thongTinThanhToanDieuTriDTO);
+        try {
+            jdbcTemplate.update(
+                    "EXEC THANHTOAN_DONTHUOC ?, ?, ?, ?, ?, ?",
+                    thongTinThanhToanDieuTriDTO.getIdThongTinThanhToan(),
+                    thongTinThanhToanDieuTriDTO.getTienDaTra(),
+                    thongTinThanhToanDieuTriDTO.getTienThoi(),
+                    thongTinThanhToanDieuTriDTO.getTongTienThanhToan(),
+                    thongTinThanhToanDieuTriDTO.getLoaiThanhToan(),
+                    thongTinThanhToanDieuTriDTO.getGhiChu()
+            );
+            return ResponseEntity.ok("Thanh toán thành công");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            ResponseEntity.internalServerError().body(ex.getMessage());
+        }
+        return ResponseEntity.internalServerError().body("Lỗi hệ thống");
+    }
+
+    public ResponseEntity<?> xemTongTienThanhToan(Integer idThongTinThanhToan) {
+        String sql = "EXEC XEM_TONGTIENTHANHTOAN_THONGTIN_THANHTOAN ?";
+
+        try {
+            ThongTinThanhToanDTO result = jdbcTemplate.queryForObject(
+                    sql,
+                    new Object[]{idThongTinThanhToan},
+                    (rs, rowNum) -> {
+                        ThongTinThanhToanDTO thongTin = new ThongTinThanhToanDTO();
+                        thongTin.setIdThongTinThanhToan(rs.getInt("ID_THONGTIN_THANHTOAN"));
+                        thongTin.setTongTienThanhToan(rs.getLong("TONGTIENTHANHTOAN"));
+                        return thongTin;
+                    }
+            );
+            return ResponseEntity.ok(result);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return ResponseEntity.internalServerError().body(ex.getMessage());
+        }
+    }
 }

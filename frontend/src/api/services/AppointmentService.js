@@ -21,6 +21,17 @@ class AppointmentService {
       return error;
     }
   };
+
+  xemCuocHenNhaSi = async (idNhaSi) => {
+    try {
+      const response = await AxiosInstance.get(
+        `/appointments/dentist/${idNhaSi}`
+      );
+      return response;
+    } catch (error) {
+      return error;
+    }
+  };
 }
 
 export default new AppointmentService();

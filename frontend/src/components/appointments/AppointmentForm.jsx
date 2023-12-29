@@ -19,7 +19,6 @@ const AppointmentForm = () => {
   const [formData, setFormData] = useState({
     idBenhNhan,
     idNhaSi: dentistSelected?.idNhanVien || "",
-    idTroKham: null,
     idPhongKham: 1,
     thoiGian: "2023-12-15T09:30",
     ghiChu: "",
@@ -83,7 +82,7 @@ const AppointmentForm = () => {
         <Grid item xs={6}>
           <TextField
             fullWidth
-            label="ID Nhà Sĩ"
+            label="ID Nha Sĩ"
             name="idNhaSi"
             value={formData?.idNhaSi}
             onChange={handleChange}
